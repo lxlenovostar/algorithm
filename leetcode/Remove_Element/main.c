@@ -13,7 +13,7 @@
 int removeElement(int* nums, int numsSize, int val) {
     int i, j;
     int length = 0;
-/*    
+    
     for (i = 0; i < numsSize; i++) {
         if (*(nums + i) != val) {
             length++;
@@ -34,27 +34,7 @@ int removeElement(int* nums, int numsSize, int val) {
             }
         }
     }
-*/   
    
-    j = 0; 
-    for (i = 0; i < numsSize; i++) {
-        if (*(nums + i) != val) {
-            length++;
-        }
-        
-        if (*(nums + i) == val) {
-            while(numsSize - 1 - j >= length)
-            {
-                if (*(nums + numsSize - 1 - j) != val) {
-                    *(nums + i) = *(nums + numsSize - 1 - j);
-                    j++;
-                    break;
-                }
-                j++;
-            }
-        }
-    }
-
     return length;
 }
 
