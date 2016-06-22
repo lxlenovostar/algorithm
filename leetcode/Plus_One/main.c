@@ -4,11 +4,17 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 /*
  参数：一个数组表示整数， 数组长度，要返回的数组长度
  目标：将原来的整数加1
 */
+
+/*
+ 整型 能表示的最大数是？ 
+
+ */
 
 /**
  * Return an array of size *returnSize.
@@ -28,7 +34,7 @@ int* plusOne(int* digits, int digitsSize, int* returnSize) {
 
     printf("what1\n");
     num += 1;
-    printf("num is:%ld, ary is:%d\n", num, ary);
+    printf("num is:%ld, ary is:%ld\n", num, ary);
     if (num/ary > 0) {
         *returnSize = digitsSize + 1;
     }
@@ -59,7 +65,8 @@ void main(void)
     int testcase2[4] = {9, 9, 9, 9};
     int size2 = 0;
     int *result2;
-    int testcase3[] = {7,2,8,5,0,9,1,2,9,5,3,6,6,7,3,2,8,4,3,7,9,5,7,7,4,7,4,9,4,7,0,1,1,1,7,4,0,0,6};
+    //int testcase3[] = {7,2,8,5,0,9,1,2,9,5,3,6,6,7,3,2,8,4,3,7,9,5,7,7,4,7,4,9,4,7,0,1,1,1,7,4,0,0,6};
+    int testcase3[] = {7,9,5,7,7,4,7,4,9,4,7,0,1,1,1,7,4,0,0,6};
     int size3 = 0;
     int *result3;
     /*
@@ -80,7 +87,7 @@ void main(void)
     free(result2);
     */ 
     
-    printf("size array is:%d\n", sizeof(testcase3)/sizeof(testcase3[0]));
+    printf("size array is:%d, and ulong_max is:%u\n", sizeof(testcase3)/sizeof(testcase3[0]), ULONG_MAX);
     result3 = plusOne(testcase3, sizeof(testcase3)/sizeof(testcase3[0]), &size3);
     printf("size is:%d\n", size3);
     for (i = 0; i < size3; i++) {
