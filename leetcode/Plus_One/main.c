@@ -12,8 +12,12 @@
 */
 
 /*
- 整型 能表示的最大数是？ 
-
+ Input:
+[9,8,7,6,5,4,3,2,1,0]
+Output:
+[0,8,7,6,5,4,3,2,1,1]
+Expected:
+[9,8,7,6,5,4,3,2,1,1]
  */
 
 /**
@@ -22,36 +26,47 @@
  */
 int* plusOne(int* digits, int digitsSize, int* returnSize) {
     int i;
-    long long num = 0;
-    long long ary = 1;
     int *result;
+    int flag = 1;
+    int carry;
+   
+   for (i = digitsSize - 1; i >= 0; i--) {
+        if(digits[i] != 9) {
+            flag = 0;
+            break;    
+        }
+   }  
 
-    printf("what0\n");
-    for (i = digitsSize - 1; i >= 0; i--) {
-       num += digits[i] * ary;
-       ary *= 10;
-    }  
-
-    printf("what1\n");
-    num += 1;
-    printf("num is:%ld, ary is:%ld\n", num, ary);
-    if (num/ary > 0) {
+    if (flag)
         *returnSize = digitsSize + 1;
-    }
-    else {
+    else
         *returnSize = digitsSize;
-    }   
-
-    printf("what2\n");
+    
     result = (int *)malloc((*returnSize)*sizeof(int));
+   
+    if (flag) { 
+        for (i = (*returnSize) - 1; i >= 0; i--) {
+            result[i] = 0;
 
-    ary = 1;    
-    for (i = (*returnSize) - 1; i >= 0; i--) {
-        result[i] = num % 10;
-        num /= 10;   
-    }  
-
-    printf("what3\n");
+            if (i == 0)
+                result[i] = 1;
+        }  
+    } else {
+        carry = 0;
+        for (i = (*returnSize - 1); i >= 0; i--) {
+            if (digits[i] == 9) {
+                result[i] = 0;
+                carry = 1;
+            } else {
+                if (i == (*returnSize - 1))
+                    result[i] = digits[i] + 1;
+                else
+                    result[i] = digits[i] + carry;
+                carry = 0;
+            }
+        }
+    } 
+    
     return result;
 }
 
@@ -69,7 +84,6 @@ void main(void)
     int testcase3[] = {7,9,5,7,7,4,7,4,9,4,7,0,1,1,1,7,4,0,0,6};
     int size3 = 0;
     int *result3;
-    /*
     result1 = plusOne(testcase1, 3, &size1);
     printf("size is:%d\n", size1);
     for (i = 0; i < size1; i++) {
@@ -85,7 +99,6 @@ void main(void)
     }
     printf("\n");
     free(result2);
-    */ 
     
     printf("size array is:%d, and ulong_max is:%u\n", sizeof(testcase3)/sizeof(testcase3[0]), ULONG_MAX);
     result3 = plusOne(testcase3, sizeof(testcase3)/sizeof(testcase3[0]), &size3);
