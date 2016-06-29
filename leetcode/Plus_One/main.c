@@ -9,16 +9,9 @@
 /*
  参数：一个数组表示整数， 数组长度，要返回的数组长度
  目标：将原来的整数加1
-*/
 
-/*
- Input:
-[9,8,7,6,5,4,3,2,1,0]
-Output:
-[0,8,7,6,5,4,3,2,1,1]
-Expected:
-[9,8,7,6,5,4,3,2,1,1]
- */
+  这一题的考试点是：使用int数组来表示整型而不是unsigned long long.  
+*/
 
 /**
  * Return an array of size *returnSize.
@@ -54,18 +47,22 @@ int* plusOne(int* digits, int digitsSize, int* returnSize) {
     } else {
         carry = 0;
         for (i = (*returnSize - 1); i >= 0; i--) {
-            if (digits[i] == 9) {
-                result[i] = 0;
-                carry = 1;
-            } else {
-                if (i == (*returnSize - 1))
-                    result[i] = digits[i] + 1;
-                else
-                    result[i] = digits[i] + carry;
-                carry = 0;
-            }
+                if (i == (*returnSize - 1)) {
+                    result[i] = (digits[i] + 1)%10;
+                    if (digits[i] + 1 == 10)
+                        carry = 1;
+                    else 
+                        carry = 0;
+                }
+                else {
+                    result[i] = (digits[i] + carry)%10;
+                    if (digits[i] + carry == 10)
+                        carry = 1;
+                    else 
+                        carry = 0;
+                }
         }
-    } 
+    }
     
     return result;
 }
@@ -74,7 +71,7 @@ int* plusOne(int* digits, int digitsSize, int* returnSize) {
 void main(void)
 {
     int i;
-    int testcase1[3] = {1, 2, 3};
+    int testcase1[3] = {9, 2, 3};
     int size1 = 0;
     int *result1;
     int testcase2[4] = {9, 9, 9, 9};
