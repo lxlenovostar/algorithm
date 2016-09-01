@@ -15,32 +15,20 @@ public class Solution {
         
         for (j = 0; j < n; j++)
             aux[i+j] = nums2[j];
-       
-		/* 
-		for (i = 0; i < 6; i++)
-            System.out.printf("%d:", aux[i]);       
-		System.out.println();       
-		*/
 
         i = 0;
         j = m;
         for (k = 0; k < (m + n); k++) {
             if (i >= m) {
-				//System.out.println("fuck0");       
 				nums1[k] = aux[j++];
 			} 
             else if (j >= (n+m)) {
-				//System.out.println("fuck1");       
 				nums1[k] = aux[i++]; 
 			}
             else if (aux[j] <= aux[i]) {
-            	//System.out.printf("aux[i] %d, i %d, aux[j] %d, j %d", aux[i], i, aux[j], j);       
-				//System.out.println(" fuck2");       
 				nums1[k] = aux[j++];
 			}
             else { 
-            	//System.out.printf("aux[i] %d, i %d, aux[j] %d, j %d", aux[i], i, aux[j], j);       
-				//System.out.println(" fuck3");       
 				nums1[k] = aux[i++];
 			}
         } 
