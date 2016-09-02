@@ -7,19 +7,23 @@
  * 将时间复杂度从3次方下降到2次方。
  *
  *
- java 中如何用pair
+ java 中如何用泛型
  */
 
 public class Solution {
      public static List<List<Integer>> threeSum(int[] nums) {
-        HashMap<Integer, <Integer, Integer>> map = new HashMap<>();
+        HashMap<Integer, Integer [2]> map = new HashMap<>();
 
+        int[] temp; 
         for (int i = 0; i < nums.length; ++i) {
             for (int j = i+1; j < nums.length; ++j) {
             if (map.get(nums[i] + nums[j]) != null) {
                 continue;
             }
-            map.put((nums[i] + nums[j]), <nums[i], nums[j]>);
+            temp = new int[2];
+            temp[0] = nums[i];
+            temp[1] = nums[j];
+            map.put((nums[i] + nums[j]), temp);
         }
 
        
