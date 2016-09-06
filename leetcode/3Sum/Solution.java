@@ -59,9 +59,9 @@ public class Solution {
         List<List<Integer>> result;
         result = Solution.threeSum(a1);
 
-        for (Iterator<List<Integer>> iter = result.iterator(); iter.hashNext();) {
+        for (Iterator<List<Integer>> iter = result.iterator(); iter.hasNext();) {
             List<Integer> element = iter.next();
-            for (Iterator<Integer> inner_iter = element.iterator(); inner_iter.hashNext();) {
+            for (Iterator<Integer> inner_iter = element.iterator(); inner_iter.hasNext();) {
                 int e = inner_iter.next();
                 System.out.printf("%d:", e);       
             }
