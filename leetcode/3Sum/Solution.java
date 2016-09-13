@@ -6,16 +6,16 @@
  *
  * 将时间复杂度从3次方下降到2次方。
  *
- *
- 0.看看 arraylist
- 1.迭代器的使用 ？？
  */
 import java.util.*;
 
 public class Solution {
      public static List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> threesum = new ArrayList<List<Integer>>();    
-        //List<List<Integer>> 3sum = new ArrayList<>();
+
+        if (nums.length < 3)
+            return threesum;
+
         HashMap<Integer, int[]> map = new HashMap<Integer, int[]>();
         
         int[] temp; 
@@ -25,21 +25,60 @@ public class Solution {
                     continue;
                 }
             temp = new int[2];
-            temp[0] = nums[i];
-            temp[1] = nums[j];
+
+            if (nums[i] <= nums[j]) {
+                temp[0] = nums[i];
+                temp[1] = nums[j];
+            } else {
+                temp[0] = nums[j];
+                temp[1] = nums[i];
+            }
+
             map.put((nums[i] + nums[j]), temp);
             }
         }
 
+       //just test.
+       /*
+       for (int e: map.keySet()) {
+            System.out.printf("key:%d, value0:%d, value1:%d", e, map.get(e)[0], map.get(e)[1]);       
+		    System.out.println();       
+       }
+       */
+
         for (int i = 0; i < nums.length; ++i) {
             if (map.get(-nums[i]) != null) {
                 List<Integer> result = new ArrayList<Integer>();
-                result.add(nums[i]);
-                int[] value = map.get(-nums[i]);
-                result.add(value[0]);
-                result.add(value[1]);
+            
+               int[] value = map.get(-nums[i]);
+               if (nums[i] <= value[0]) {
+                    result.add(nums[i]);
+                    result.add(value[0]);
+                    result.add(value[1]);
+               } else if (nums[i] <= value[1]) {
+                    result.add(value[0]);
+                    result.add(nums[i]);
+                    result.add(value[1]);
+                } else {     
+                    result.add(value[0]);
+                    result.add(value[1]);
+                    result.add(nums[i]);
+                }
 
-                threesum.add(result);
+                if (threesum.indexOf(result) == -1)
+                    threesum.add(result);
+
+                //just test.
+                /*
+                System.out.printf("new version %d:\n", nums[i]);       
+                for (List<Integer> element: threesum) { 
+                    for (int e: element) {
+                        System.out.printf("%d:", e);       
+                    }
+		            System.out.println();       
+                }
+		        System.out.println("end version");       
+                */
             }
         }
 
@@ -48,6 +87,7 @@ public class Solution {
 
     public static void main(String[] args)
     {
+        /*
         int[] a1 = new int[6];
 		a1[0] = -1;
 		a1[1] = 0;
@@ -55,7 +95,20 @@ public class Solution {
 		a1[3] = 2;
 		a1[4] = -1;
 		a1[5] = -4;
-    
+        */
+       
+        /* 
+        int[] a1 = new int[3];
+        a1[0] = -1;
+        a1[1] = 1;
+        a1[2] = 0;
+        */
+
+        int[] a1 = new int[4];
+        a1[0] = 1;
+        a1[1] = 2;
+        a1[2] = -2;
+        a1[3] = -1;
         List<List<Integer>> result;
         result = Solution.threeSum(a1);
 
