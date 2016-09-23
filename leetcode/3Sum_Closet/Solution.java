@@ -28,9 +28,9 @@ public class Solution {
             int right = nums.length - 1;
 
             while (left < right) {
-    			//System.out.printf("fuck0 left is:%d, rigth is:%d\n", left, right);       
                 int sum = nums[left] + nums[right] + nums[i];
 
+    			System.out.printf("fuck0 sum is:%d, left is:%d, rigth is:%d\n", sum, left, right);       
                 if (Math.abs(sum - target) <= min_intval) {
 					min_intval = Math.abs(sum - target);
 					result = sum;
@@ -39,6 +39,7 @@ public class Solution {
                 left++;
                 right--;
 
+				/*
 				while (left < right && nums[left] == nums[left - 1]) { // to skip duplicates
                     left++;
                 }
@@ -47,6 +48,7 @@ public class Solution {
                     right--;
                	} 
 
+				*/
             }
         }
 
@@ -58,7 +60,8 @@ public class Solution {
         //int[] a1 = {-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6};
         //int[] a1 = {-1, 2, 1, -4};
         //int[] a1 = {1, 1, 1, 0};
-        int[] a1 = {0, 0, 0, 0};
+        //int[] a1 = {0, 0, 0, 0};
+        int[] a1 = {0, 2, 1, -3};
 
         int result = Solution.threeSumClosest(a1, 1);
 
