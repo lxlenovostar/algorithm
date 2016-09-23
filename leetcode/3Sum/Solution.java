@@ -59,85 +59,6 @@ public class Solution {
         }
 
         return rst;
-
-        /* 
-        List<List<Integer>> threesum = new ArrayList<List<Integer>>();    
-
-        if (nums.length < 3)
-            return threesum;
-
-        HashMap<Integer, int[][]> map = new HashMap<Integer, int[][]>();
-        
-        int[][] temp; 
-        for (int i = 0; i < nums.length; ++i) {
-            for (int j = i+1; j < nums.length; ++j) {
-                if (map.get(nums[i] + nums[j]) != null) {
-                    continue;
-                }
-            temp = new int[2][2];
-
-            if (nums[i] <= nums[j]) {
-                temp[0][0] = nums[i];
-                temp[0][1] = i;
-                temp[1][0] = nums[j];
-                temp[1][1] = j;
-            } else {
-                temp[0][0] = nums[j];
-                temp[0][1] = j;
-                temp[1][0] = nums[i];
-                temp[1][1] = i;
-            }
-
-            map.put((nums[i] + nums[j]), temp);
-            }
-        }
-
-       //just test.
-       for (int e: map.keySet()) {
-            System.out.printf("key:%d, value0:%d, index0:%d, value1:%d, index1:%d", e, map.get(e)[0][0], map.get(e)[0][1], map.get(e)[1][0], map.get(e)[1][1]);       
-		    System.out.println();       
-       }
-
-        for (int i = 0; i < nums.length; ++i) {
-            if (map.get(-nums[i]) != null) {
-               int[][] value = map.get(-nums[i]);
-               
-               if (i == value[0][1] || i == value[1][1])
-                    continue;
- 
-               List<Integer> result = new ArrayList<Integer>();
-            
-               if (nums[i] <= value[0][0]) {
-                    result.add(nums[i]);
-                    result.add(value[0][0]);
-                    result.add(value[1][0]);
-               } else if (nums[i] <= value[1][0]) {
-                    result.add(value[0][0]);
-                    result.add(nums[i]);
-                    result.add(value[1][0]);
-                } else {     
-                    result.add(value[0][0]);
-                    result.add(value[1][0]);
-                    result.add(nums[i]);
-                }
-
-                if (threesum.indexOf(result) == -1)
-                    threesum.add(result);
-
-                //just test.
-                System.out.printf("new version %d:\n", nums[i]);       
-                for (List<Integer> element: threesum) { 
-                    for (int e: element) {
-                        System.out.printf("%d:", e);       
-                    }
-		            System.out.println();       
-                }
-		        System.out.println("end version");       
-            }
-        }
-
-        return threesum;
-        */
     }
 
     public static void main(String[] args)
@@ -151,10 +72,11 @@ public class Solution {
 		a1[5] = -4;
         */
 
-        int[] a1 = new int[3];
+        /*int[] a1 = new int[3];
         a1[0] = -1;
         a1[1] = 1;
         a1[2] = 0;
+		*/
 
         /*int[] a1 = new int[4];
         a1[0] = 1;
@@ -164,6 +86,8 @@ public class Solution {
         */
 
         //int[] a1 = {-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6};
+        int[] a1 = {-3, 0, 1, 2};
+
 
         List<List<Integer>> result;
         result = Solution.threeSum(a1);
