@@ -40,12 +40,10 @@ public class Solution {
                 right--;
 
 				while (left < right && nums[left] == nums[left - 1]) { // to skip duplicates
-    				System.out.println("fuck1");       
                     left++;
                 }
 
                 while (left < right && nums[right] == nums[right + 1]) { // to skip duplicates
-    				System.out.println("fuck2");       
                     right--;
                	} 
 
