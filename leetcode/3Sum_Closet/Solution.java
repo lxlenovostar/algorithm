@@ -1,6 +1,8 @@
 /*
  * 16. 3Sum Closest
  *
+ * Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+ *	
  * 将时间复杂度从3次方下降到2次方。
  */
 import java.util.*;
@@ -8,7 +10,6 @@ import java.lang.Integer;
 
 public class Solution {
 	 public static int threeSumClosest(int[] nums, int target) {
-     //public static List<List<Integer>> threeSum(int[] nums) {
 		int min_intval = Integer.MAX_VALUE;
 		int result = 0;
 
@@ -27,24 +28,27 @@ public class Solution {
             int right = nums.length - 1;
 
             while (left < right) {
+    			//System.out.printf("fuck0 left is:%d, rigth is:%d\n", left, right);       
                 int sum = nums[left] + nums[right] + nums[i];
 
                 if (Math.abs(sum - target) <= min_intval) {
 					min_intval = Math.abs(sum - target);
 					result = sum;
-
-                    left++;
-                    right--;
-
-                    while (left < right && nums[left] == nums[left - 1]) { // to skip duplicates
-                        left++;
-                    }
-
-                    while (left < right && nums[right] == nums[right + 1]) { // to skip duplicates
-                        right--;
-                    }
-
                 } 
+
+                left++;
+                right--;
+
+				while (left < right && nums[left] == nums[left - 1]) { // to skip duplicates
+    				System.out.println("fuck1");       
+                    left++;
+                }
+
+                while (left < right && nums[right] == nums[right + 1]) { // to skip duplicates
+    				System.out.println("fuck2");       
+                    right--;
+               	} 
+
             }
         }
 
@@ -53,15 +57,10 @@ public class Solution {
 
     public static void main(String[] args)
     {
-		/*
-        int[] a1 = new int[3];
-        a1[0] = -1;
-        a1[1] = 1;
-        a1[2] = 0;
-		*/
-
         //int[] a1 = {-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6};
-        int[] a1 = {-1, 2, 1, -4};
+        //int[] a1 = {-1, 2, 1, -4};
+        //int[] a1 = {1, 1, 1, 0};
+        int[] a1 = {0, 0, 0, 0};
 
         int result = Solution.threeSumClosest(a1, 1);
 
