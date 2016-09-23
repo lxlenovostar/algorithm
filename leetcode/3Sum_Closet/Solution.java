@@ -35,7 +35,8 @@ public class Solution {
 					min_intval = Math.abs(sum - target);
 					result = sum;
                 } 
-
+	
+				// 如何移动left, right 是关键？？
                 left++;
                 right--;
 
