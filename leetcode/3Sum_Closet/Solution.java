@@ -19,6 +19,12 @@ public class Solution {
 
         Arrays.sort(nums); 
 
+		/*	
+		for(int e: nums) 
+        	System.out.printf("%d:", e);       
+    	System.out.println();       
+		*/
+
         for (int i = 0; i < nums.length - 2; i++) {
             if (i != 0 && nums[i] == nums[i - 1]) {
                 continue; // to skip duplicate numbers; e.g [0,0,0,0]
@@ -30,29 +36,23 @@ public class Solution {
             while (left < right) {
                 int sum = nums[left] + nums[right] + nums[i];
 
-    			System.out.printf("fuck0 sum is:%d, left is:%d, rigth is:%d\n", sum, left, right);       
+    			//System.out.printf("sum:%d i:%d i_value:%d left:%d left_value:%d rigth:%d right_value:%d\n", sum, i, nums[i], left, nums[left], right, nums[right]);       
                 if (Math.abs(sum - target) <= min_intval) {
 					min_intval = Math.abs(sum - target);
 					result = sum;
                 } 
 	
-				// 如何移动left, right 是关键？？
-				if (sum >= 0) { 
+				if (sum >= target) { 
                 	right--;
+					while (left < right && nums[right] == nums[right + 1]) { // to skip duplicates
+                    	right--;
+               		} 
 				} else {
-                	left++;
+                   	left++;
+					while (left < right && nums[left] == nums[left - 1]) { // to skip duplicates
+                    	left++;
+                	}
 				}
-
-				/*
-				while (left < right && nums[left] == nums[left - 1]) { // to skip duplicates
-                    left++;
-                }
-
-                while (left < right && nums[right] == nums[right + 1]) { // to skip duplicates
-                    right--;
-               	} 
-
-				*/
             }
         }
 
@@ -66,8 +66,10 @@ public class Solution {
         //int[] a1 = {1, 1, 1, 0};
         //int[] a1 = {0, 0, 0, 0};
         //int[] a1 = {0, 2, 1, -3};
+        int[] a1 = {1, 1, -1, -1, 3};
 
-        int result = Solution.threeSumClosest(a1, 1);
+        //int result = Solution.threeSumClosest(a1, 1);
+        int result = Solution.threeSumClosest(a1, 3);
 
         System.out.printf("%d:", result);       
     	System.out.println();       
