@@ -37,8 +37,11 @@ public class Solution {
                 } 
 	
 				// 如何移动left, right 是关键？？
-                left++;
-                right--;
+				if (sum >= 0) { 
+                	right--;
+				} else {
+                	left++;
+				}
 
 				/*
 				while (left < right && nums[left] == nums[left - 1]) { // to skip duplicates
@@ -62,7 +65,7 @@ public class Solution {
         //int[] a1 = {-1, 2, 1, -4};
         //int[] a1 = {1, 1, 1, 0};
         //int[] a1 = {0, 0, 0, 0};
-        int[] a1 = {0, 2, 1, -3};
+        //int[] a1 = {0, 2, 1, -3};
 
         int result = Solution.threeSumClosest(a1, 1);
 
