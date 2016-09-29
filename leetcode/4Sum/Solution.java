@@ -31,7 +31,7 @@ public class Solution {
 			if (j != 0 && nums[j] == nums[j - 1]) {
 					continue; // to skip duplicate numbers; e.g [0,0,0,0]
 				}
-			for (int i = 0; i < nums.length - 2; i++) {
+			for (int i = j + 1; i < nums.length - 2; i++) {
 				if (i != 0 && nums[i] == nums[i - 1]) {
 						continue; // to skip duplicate numbers; e.g [0,0,0,0]
 					}
@@ -76,34 +76,12 @@ public class Solution {
 
     public static void main(String[] args)
     {
-        /*int[] a1 = new int[6];
-		a1[0] = -1;
-		a1[1] = 0;
-		a1[2] = 1;
-		a1[3] = 2;
-		a1[4] = -1;
-		a1[5] = -4;
-        */
-
-        /*int[] a1 = new int[3];
-        a1[0] = -1;
-        a1[1] = 1;
-        a1[2] = 0;
-		*/
-
-        /*int[] a1 = new int[4];
-        a1[0] = 1;
-        a1[1] = 2;
-        a1[2] = -2;
-        a1[3] = -1;
-        */
-
         //int[] a1 = {-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6};
         int[] a1 = {1, 0, -1, 0, -2, 2};
 
 
         List<List<Integer>> result;
-        result = Solution.fourSum(a1, 0);
+        result = Solution.fourSum(a1, 3);
 
         for (List<Integer> element: result) { 
             for (int e: element) {
