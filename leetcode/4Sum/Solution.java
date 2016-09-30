@@ -20,7 +20,6 @@ import java.util.*;
 public class Solution {
      public static List<List<Integer>> fourSum(int[] nums, int target) {
         List<List<Integer>> rst = new ArrayList<List<Integer>>();
-		int min_intval = Integer.MAX_VALUE;
         
 		if(nums == null || nums.length < 4) {
             return rst;
@@ -46,13 +45,19 @@ public class Solution {
 					 while (left < right) {
                 		int sum = nums[left] + nums[right] + nums[i] + nums[j];
 
-                //System.out.printf("sum:%d i:%d i_value:%d left:%d left_value:%d rigth:%d right_value:%d\n", sum, i, nums[i], left, nums[left], right, nums[right]);       
-                		if (Math.abs(sum - target) <= min_intval) {
-                    		min_intval = Math.abs(sum - target);
-                    		result = sum;
-                		}   
-        
-                		if (sum >= target) { 
+						if (sum == target) {
+							ArrayList<Integer> tmp = new ArrayList<Integer>();
+                    		tmp.add(nums[j]);
+                    		tmp.add(nums[i]);
+                    		tmp.add(nums[left]);
+                    		tmp.add(nums[right]);
+
+							if (rst.indexOf(tmp) == -1)
+                    			rst.add(tmp);
+
+							right--;
+							left++;
+						}  else if (sum > target) { 
                     		right--;
                     		while (left < right && nums[right] == nums[right + 1]) { // to skip duplicates
                         		right--;
@@ -72,15 +77,13 @@ public class Solution {
 
     public static void main(String[] args)
     {
-        //int[] a1 = {-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6};
-        //int[] a1 = {1, 0, -1, 0, -2, 2};
-        int[] a1 = {-2, -1, 0, 0, 1, 2};
+        //int[] a1 = {-2, -1, 0, 0, 1, 2};
         //int[] a1 = {0, 0, 0, 0, 0};
-        //int[] a1 = {-3, -1, 0, 2, 4, 5};
+        int[] a1 = {-3, -1, 0, 2, 4, 5};
 
 
         List<List<Integer>> result;
-        result = Solution.fourSum(a1, 0);
+        result = Solution.fourSum(a1, 2);
 
         for (List<Integer> element: result) { 
             for (int e: element) {
