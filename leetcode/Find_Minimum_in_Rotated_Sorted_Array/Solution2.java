@@ -27,8 +27,10 @@ public class Solution2 {
 		System.out.println();       
 
 		if (nums.length == 1) {
+			System.out.printf("fuck0.1 mid:%d\n", mid);       
 			return result;
 		} else if (nums.length == 2) {
+			System.out.printf("fuck0.2 mid:%d\n", mid);       
 			if (nums[0] <= nums[1])
 				return nums[0];
 			else 
@@ -38,30 +40,28 @@ public class Solution2 {
 			return nums[mid];
 		}
 		else {
-			if (nums[mid+1] < nums[mid-1]) {
-				System.out.printf("fuck1 mid:%d\n", mid);       
-				int[] dst_nums = new int[mid];
-				System.arraycopy(nums, mid+1, dst_nums, 0, mid);
+			int[] dst_nums_left = new int[mid];
+			System.arraycopy(nums, mid+1, dst_nums_left, 0, (nums.length -1 - mid));
 				
-				System.out.println("print array");       
-				for (int j : dst_nums)
-					System.out.printf("%d:", j);       
-				System.out.println();       
+			System.out.println("print array");       
+			for (int j : dst_nums_left)
+				System.out.printf("%d:", j);       
+			System.out.println();       
 
-				result = findMin(dst_nums);
-			}
-			else {
-				System.out.printf("fuck2 mid:%d\n", mid);       
-				int[] dst_nums = new int[mid];
-				System.arraycopy(nums, 0, dst_nums, 0, mid);
+			int[] dst_nums_right = new int[mid];
+			System.arraycopy(nums, 0, dst_nums_right, 0, mid);
 
-				System.out.println("print array");       
-				for (int j : dst_nums)
-					System.out.printf("%d:", j);       
-				System.out.println();       
+			System.out.println("print array");       
+			for (int j : dst_nums_right)
+				System.out.printf("%d:", j);       
+			System.out.println();       
 				
-				result = findMin(dst_nums);
-			}
+			int result_left = findMin(dst_nums_left);
+			int result_right = findMin(dst_nums_right);
+
+			if (result_left <= result_right)
+				result = result_left;
+	
 		} 
 
 		return result;
@@ -69,8 +69,10 @@ public class Solution2 {
 
     public static void main(String[] args)
     {
-        //int[] a1 = {4, 5, 6, 7, 1, 2, 3};
-        int[] a1 = {4};
+        int[] a1 = {4, 5, 6, 7, 1, 2, 3};
+        //int[] a1 = {3, 4, 5, 6, 1, 2 };
+        //int[] a1 = {2, 3, 4, 5, 1};
+        //int[] a1 = {4};
         //int[] a1 = {1, 2};
 
 
