@@ -43,7 +43,7 @@ public class Solution2 {
 			int[] dst_nums_left = new int[mid];
 			System.arraycopy(nums, mid+1, dst_nums_left, 0, (nums.length -1 - mid));
 				
-			System.out.println("print array");       
+			System.out.println("left print array");       
 			for (int j : dst_nums_left)
 				System.out.printf("%d:", j);       
 			System.out.println();       
@@ -51,7 +51,7 @@ public class Solution2 {
 			int[] dst_nums_right = new int[mid];
 			System.arraycopy(nums, 0, dst_nums_right, 0, mid);
 
-			System.out.println("print array");       
+			System.out.println("right print array");       
 			for (int j : dst_nums_right)
 				System.out.printf("%d:", j);       
 			System.out.println();       
@@ -61,6 +61,8 @@ public class Solution2 {
 
 			if (result_left <= result_right)
 				result = result_left;
+			else 
+				result = result_right;
 	
 		} 
 
@@ -69,11 +71,13 @@ public class Solution2 {
 
     public static void main(String[] args)
     {
-        int[] a1 = {4, 5, 6, 7, 1, 2, 3};
+        //int[] a1 = {4, 5, 6, 7, 1, 2, 3};
         //int[] a1 = {3, 4, 5, 6, 1, 2 };
         //int[] a1 = {2, 3, 4, 5, 1};
         //int[] a1 = {4};
         //int[] a1 = {1, 2};
+        //int[] a1 = {5, 1, 2, 3, 4};
+        int[] a1 = {1, 2, 3, 4, 5, 6};
 
 
         int result = Solution2.findMin(a1);
