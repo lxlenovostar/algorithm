@@ -21,19 +21,19 @@ public class Solution2 {
 
 		int mid = nums.length / 2;
 
-		System.out.println("begin print array");       
+		System.out.printf("begin print array, mid:%d\n", mid);       
 		for (int j : nums)
 			System.out.printf("%d:", j);       
 		System.out.println();       
 
-		if (mid + 1 > nums.length) {
-			System.out.printf("fuck0.1 mid:%d\n", mid);       
-			return nums[mid];
-		} else if (mid - 1 < 0) {
-			System.out.printf("fuck0.2 mid:%d value nums[mid]:%d\n", mid, nums[mid]);       
-			return nums[mid];
-		}
-		if (nums[mid] < nums[mid-1] && nums[mid] < nums[mid+1]) {
+		if (nums.length == 1) {
+			return result;
+		} else if (nums.length == 2) {
+			if (nums[0] <= nums[1])
+				return nums[0];
+			else 
+				return nums[1];
+		} else if (nums[mid] < nums[mid-1] && nums[mid] < nums[mid+1]) {
 			System.out.printf("fuck0 mid:%d\n", mid);       
 			return nums[mid];
 		}
@@ -70,8 +70,8 @@ public class Solution2 {
     public static void main(String[] args)
     {
         //int[] a1 = {4, 5, 6, 7, 1, 2, 3};
-        int[] a1 = {4, 5, 1, 2};
-        //int[] a1 = {3, 4, 5, 2, 1};
+        int[] a1 = {4};
+        //int[] a1 = {1, 2};
 
 
         int result = Solution2.findMin(a1);
