@@ -40,7 +40,7 @@ public class Solution2 {
 			return nums[mid];
 		}
 		else {
-			int[] dst_nums_left = new int[mid];
+			int[] dst_nums_left = new int[(nums.length - 1 - mid)];
 			System.arraycopy(nums, mid+1, dst_nums_left, 0, (nums.length -1 - mid));
 				
 			System.out.println("left print array");       
