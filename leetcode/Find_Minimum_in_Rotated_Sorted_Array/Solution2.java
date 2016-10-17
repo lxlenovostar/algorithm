@@ -9,7 +9,7 @@ Find the minimum element.
 
 You may assume no duplicate exists in the array.
 
-采用二分查找法, 考虑时间复杂度
+采用二分查找法, 依赖与数据的原始顺序，平均值为O(nlgn) 
  */
 
 import java.util.*;
