@@ -17,13 +17,16 @@ public class Solution {
 					if (heights[j] >= heights[i]) 
 						length++;
 					else {
-						if (j <= i)
+						if (j <= i) {
+							length = 0;
 							continue;
+						}
 						else 
 							break;
 					}
 			}
 				area = length * heights[i];
+        		System.out.printf("ares:%d\n", area);       
 				if (area >= result)
 					result = area;
 		}			
@@ -36,7 +39,8 @@ public class Solution {
     {
         //int[] a = {2, 1, 5, 6, 2, 3};
         //int[] a = {1};
-        int[] a = {0};
+        //int[] a = {0};
+        int[] a = {2, 0, 2};
 
         int result = Solution.largestRectangleArea(a);
 
