@@ -7,22 +7,36 @@ import java.util.*;
 public class Solution {
 	public static int largestRectangleArea(int[] heights) { 
 		int result = 0;
-
-		if (heights.length <= 0)
-			return result;
-		else if (heights.lengt == 1)
-			return heights[0];
+		int len = heights.length;
 	
-		/*
-         应该从大到小排序，然后计算最大值旁边的长方形面积，依次降低。
-         */			
+		for (int i = 0; i < len; i++) {
+			int area = 0;
+			int length = 0;
+
+			for (int j =0; j < len; j++) {
+					if (heights[j] >= heights[i]) 
+						length++;
+					else {
+						if (j <= i)
+							continue;
+						else 
+							break;
+					}
+			}
+				area = length * heights[i];
+				if (area >= result)
+					result = area;
+		}			
+		
 
 		return result;
     }
 
     public static void main(String[] args)
     {
-        int[] a = {2, 1, 5, 6, 2, 3};
+        //int[] a = {2, 1, 5, 6, 2, 3};
+        //int[] a = {1};
+        int[] a = {0};
 
         int result = Solution.largestRectangleArea(a);
 
