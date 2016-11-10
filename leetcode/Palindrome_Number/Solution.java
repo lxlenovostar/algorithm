@@ -11,9 +11,12 @@ public class Solution {
 		int num = 0;
 		int tmp = x;
 		int c_value = 1;
-	
-		if (x <= 0)
+
+		if (x < 0)
 			return false;
+
+        if (x == 0)
+            return true;	
 
 		while(tmp != 0) {
 			tmp /= 10; 
@@ -29,14 +32,14 @@ public class Solution {
 			int r_value = tmp%10;
 			int l_value = tmp1/c_value;
 
-        	System.out.printf("what1 l_value:%d r_value:%d\n", l_value, r_value);       
+        	System.out.printf("what1 l_value:%d tmp1:%d c_value:%d r_value:%d tmp:%d\n", l_value, tmp1, c_value, r_value, tmp);       
 
 			if (r_value != l_value) {
 				return false;
 			}
 
 			tmp /= 10;
-			tmp %= c_value;
+			tmp1 %= c_value;
 			c_value /= 10;
 		}
 		
@@ -47,7 +50,7 @@ public class Solution {
     public static void main(String[] args)
     {
         //System.out.printf("%d:", Solution.isPalindrome(121));       
-        System.out.println(Solution.isPalindrome(121));       
-        System.out.println(Solution.isPalindrome(1221));       
+        //System.out.println(Solution.isPalindrome(121));       
+        System.out.println(Solution.isPalindrome(1001));       
     }
 }
