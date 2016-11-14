@@ -33,7 +33,7 @@ public class Solution {
         }  else {
             int mid = length/2;
             
-            //System.out.printf("mid:%d\n", mid);       
+            System.out.printf("mid:%d\n", mid);       
 
             if (target == matrix[mid])
                 return true;
@@ -56,7 +56,7 @@ public class Solution {
         int row = matrix.length - 1;
         int col = matrix[0].length - 1;        
 	
-        //System.out.printf("row:%d col:%d\n", row, col);       
+        System.out.printf("row:%d col:%d\n", row, col);       
         if (target < matrix[0][0] || target > matrix[row][col])
             return false;
 
@@ -74,13 +74,15 @@ public class Solution {
         //int[] a = {2, 1, 5, 6, 2, 3};
         //int[] a = {1};
         //int[] a = {0};
-        int [][] a = {
+        /*int [][] a = {
                 {1,   3,  5,  7},
                 {10, 11, 16, 20},
                 {23, 30, 34, 50}
                 };        
+        */
+        int [][] a = { {1,   3,  5}};
 
-        boolean result = Solution.searchMatrix(a, 31);
+        boolean result = Solution.searchMatrix(a, 5);
 
         System.out.printf("%d:\n", result == true ? 0: 1);       
     }
