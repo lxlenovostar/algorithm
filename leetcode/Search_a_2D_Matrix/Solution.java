@@ -33,23 +33,29 @@ public class Solution {
         }  else {
             int mid = length/2;
             
-            //System.out.printf("length:%d mid:%d\n", length, mid);       
+            System.out.printf("length:%d mid:%d\n", length, mid);       
 
             if (target == matrix[mid])
                 return true;
             else if (target > matrix[mid]) {
-                //System.out.printf("here1\n");       
-                int[] dest = new int[mid];
+                System.out.printf("here1\n");       
+                int[] dest; 
 
-                if (mid+1 == length)
-                    System.arraycopy(matrix, mid, dest, 0, mid);
-                else 
-                    System.arraycopy(matrix, mid+1, dest, 0, mid);
+                if (mid+1 == length-1) {
+                    dest = new int[1];
+                    System.arraycopy(matrix, mid+1, dest, 0, 1);
+                    System.out.printf("here3\n");       
+                }
+                else { 
+                    dest = new int[mid-1];
+                    System.arraycopy(matrix, mid+1, dest, 0, mid-1);
+                    System.out.printf("here4\n");       
+                }
 
                 flag = check_value(dest, target);
             }
             else { 
-                //System.out.printf("here2\n");       
+                System.out.printf("here2\n");       
                 int[] dest = new int[mid];
                 System.arraycopy(matrix, 0, dest, 0, mid);
                 flag = check_value(dest, target);
@@ -63,13 +69,13 @@ public class Solution {
         int row = matrix.length - 1;
         int col = matrix[0].length - 1;        
 	
-        //System.out.printf("row:%d col:%d\n", row, col);       
+        System.out.printf("row:%d col:%d\n", row, col);       
         if (target < matrix[0][0] || target > matrix[row][col])
             return false;
 
         for (int i = 0; i <= row; i++) {
             if (target <= matrix[i][col]) {
-                //System.out.printf("row:%d\n", row);       
+                System.out.printf("row:%d, target:%d, matrix:%d\n", i, target, matrix[i][col]);       
                 return check_value(matrix[i], target);
             }
         }        
@@ -79,17 +85,28 @@ public class Solution {
 
     public static void main(String[] args)
     {
-        /*int [][] a = {
+        int [][] a = {
                 {1,   3,  5,  7},
                 {10, 11, 16, 20},
                 {23, 30, 34, 50}
                 };        
-        */
+        
         //boolean result = Solution.searchMatrix(a, 5);
         //boolean result = Solution.searchMatrix(a, 31);
+        //boolean result = Solution.searchMatrix(a, 7);
+        boolean result = Solution.searchMatrix(a, 13);
 
+        /* 
         int [][] a = { {1,   3,  5}};
         boolean result = Solution.searchMatrix(a, 5);
+        */
+
+        /*
+        int [][] a = {
+        {1,3,5,7}, {10,11,16,20}, {23,30,34,50}
+        };
+        boolean result = Solution.searchMatrix(a, 6);
+        */
 
         System.out.printf("%d:\n", result == true ? 0: 1);       
     }
