@@ -25,7 +25,10 @@ public class Solution {
         int length = matrix.length;
         boolean flag = false;
 
-        if (length == 1) {
+        if (length == 0) {
+            return false;
+        }
+        else if (length == 1) {
             if (matrix[0] == target)
                 return true;
             else 
