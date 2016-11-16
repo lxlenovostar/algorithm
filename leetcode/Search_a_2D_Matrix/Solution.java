@@ -42,9 +42,6 @@ public class Solution {
                 return true;
             else if (target > matrix[mid]) {
                 //System.out.printf("here1\n");       
-                
-                if (mid == length - 1)
-                    return false;
 
                 int rmd = length - mid - 1;
                 int[] dest = new int[rmd]; 
