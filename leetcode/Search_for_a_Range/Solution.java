@@ -15,16 +15,24 @@
 import java.util.*;
 
 public class Solution {
+    private static void check_array(int[] nums, int target, ArrayList<Integer> r_array, boolean flag_l, boolean flag_r) 
+{
+    }
+
     public static int[] searchRange(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return {-1, -1};
         }
-        
+
+        /* 处理特殊数组长度是1或者2的特殊情况 */      
+  
         boolean flag = false;
         int start = 0, end = nums.length - 1;
+        int mid = 0;
+        ArrayList<Integer> result = new Arraylist<Integer>();
         while (start + 1 < end) {
             /* 计算mid的方法 */
-            int mid = start + (end - start) / 2;
+            mid = start + (end - start) / 2;
 
             if (nums[mid] == target) {
                 flag = true;
@@ -36,11 +44,18 @@ public class Solution {
             }
         }
 
-        if (flag == false) {
+        if (flag == true) {
+            Vector result = new Vector();
+            result.add(mid);
+            /*向左边查，向右边查 */
+        }
+        else {
             if (nums[end] == target) {
-                //row = end;
+                result.add(end);
+                /*向左边查 */
             } else if (nums[start] == target) {
-                //row = start;
+                result.add(start);
+                /*向右边查 */
             } else {
                 return {-1, -1};
             }
