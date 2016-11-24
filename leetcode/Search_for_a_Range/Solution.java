@@ -21,7 +21,7 @@ public class Solution {
         int check_left = mid;
         int check_right = mid;
 
-        while (check_left >= start) {
+        while (check_left > start) {
             if (nums[check_left-1] == target) {
                 r_array.add(0, check_left-1);
                 check_left--;
@@ -29,7 +29,7 @@ public class Solution {
                 break;
         }
 
-        while (check_right <= end) {
+        while (check_right < end) {
             if (nums[check_right+1] == target) {
                 r_array.add(check_right+1);
                 check_right++;
@@ -47,8 +47,9 @@ public class Solution {
 
         if (nums.length == 1) {
             if (nums[0] == target) {
-                int[] right_result = new int[1];
+                int[] right_result = new int[2];
                 right_result[0] = 0;
+                right_result[1] = 0;
                 return right_result;
             } else  
                 return err_result;
@@ -93,12 +94,14 @@ public class Solution {
                 return right_result;
  
             } else if (nums[start] == target) {
-                int[] right_result = new int[1];
+                int[] right_result = new int[2];
                 right_result[0] = start;
+                right_result[1] = start;
                 return right_result;
             } else if (nums[end] == target) {
-                int[] right_result = new int[1];
+                int[] right_result = new int[2];
                 right_result[0] = end;
+                right_result[1] = end;
                 return right_result;
             } else {
                 return err_result;
@@ -115,10 +118,16 @@ public class Solution {
         boolean result = Solution.searchMatrix(a, 6);
         System.out.printf("%d:\n", result == true ? 0: 1);       
         */
-
+    
+        /*
         int[] a =  {5, 7, 7, 8, 8, 10}; 
         //int target = 8;
         int target = 1;
+        */
+
+        int[] a =  {1, 2, 2}; 
+        int target = 2;
+
         int[] result = Solution.searchRange(a, target);
         
         for (int i = 0; i < result.length; i++)
