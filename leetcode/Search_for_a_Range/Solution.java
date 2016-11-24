@@ -15,21 +15,49 @@
 import java.util.*;
 
 public class Solution {
-    private static void check_array(int[] nums, int target, ArrayList<Integer> r_array, boolean flag_l, boolean flag_r) 
+    private static void check_array(int[] nums, int target, ArrayList<Integer> r_array, int mid) 
 {
+        int start = 0, end = nums.length - 1;
+        int check_left = mid;
+        int check_right = mid;
+
+        while (check_left >= start) {
+            if (nums[check_left-1] == target) {
+                r_array.add(0, check_left-1);
+                check_left--;
+            } else 
+                break;
+        }
+
+        while (check_right <= end) {
+            if (nums[check_right+1] == target) {
+                r_array.add(check_right+1);
+                check_right++;
+            } else 
+                break;
+        }
     }
 
     public static int[] searchRange(int[] nums, int target) {
+        int[] err_result = {-1, -1}; 
+
         if (nums == null || nums.length == 0) {
-            return {-1, -1};
+            return err_result;
         }
 
-        /* 处理特殊数组长度是1或者2的特殊情况 */      
-  
+        if (nums.length == 1) {
+            if (nums[0] == target) {
+                int[] right_result = new int[1];
+                right_result[0] = 0;
+                return right_result;
+            } else  
+                return err_result;
+        }
+
         boolean flag = false;
         int start = 0, end = nums.length - 1;
         int mid = 0;
-        ArrayList<Integer> result = new Arraylist<Integer>();
+        ArrayList<Integer> result = new ArrayList<Integer>();
         while (start + 1 < end) {
             /* 计算mid的方法 */
             mid = start + (end - start) / 2;
@@ -45,23 +73,37 @@ public class Solution {
         }
 
         if (flag == true) {
-            Vector result = new Vector();
             result.add(mid);
-            /*向左边查，向右边查 */
+            /* check left and right */
+            check_array(nums, target, result, mid); 
+
+            int[] right_result = new int[result.size()];
+            int i = 0;
+            for (int tmp : result) {
+                right_result[i] = tmp;
+                i++;
+            }
+            return right_result;
         }
         else {
-            if (nums[end] == target) {
-                result.add(end);
-                /*向左边查 */
+            if (nums[end] == target && nums[start] == target) {
+                int[] right_result = new int[2];
+                right_result[0] = start;
+                right_result[1] = end;
+                return right_result;
+ 
             } else if (nums[start] == target) {
-                result.add(start);
-                /*向右边查 */
+                int[] right_result = new int[1];
+                right_result[0] = start;
+                return right_result;
+            } else if (nums[end] == target) {
+                int[] right_result = new int[1];
+                right_result[0] = end;
+                return right_result;
             } else {
-                return {-1, -1};
+                return err_result;
             }
         }
-        
-        return {-1, -1};
     }
 
     public static void main(String[] args)
@@ -73,6 +115,14 @@ public class Solution {
         boolean result = Solution.searchMatrix(a, 6);
         System.out.printf("%d:\n", result == true ? 0: 1);       
         */
+
+        int[] a =  {5, 7, 7, 8, 8, 10}; 
+        //int target = 8;
+        int target = 1;
+        int[] result = Solution.searchRange(a, target);
+        
+        for (int i = 0; i < result.length; i++)
+            System.out.printf("%d:\n", result[i]);       
     }
 }
 
