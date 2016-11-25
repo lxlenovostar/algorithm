@@ -40,6 +40,7 @@ public class Solution {
 
     public static int[] searchRange(int[] nums, int target) {
         int[] err_result = {-1, -1}; 
+        int[] right_result = new int[2];
 
         if (nums == null || nums.length == 0) {
             return err_result;
@@ -47,7 +48,6 @@ public class Solution {
 
         if (nums.length == 1) {
             if (nums[0] == target) {
-                int[] right_result = new int[2];
                 right_result[0] = 0;
                 right_result[1] = 0;
                 return right_result;
@@ -78,28 +78,21 @@ public class Solution {
             /* check left and right */
             check_array(nums, target, result, mid); 
 
-            int[] right_result = new int[result.size()];
-            int i = 0;
-            for (int tmp : result) {
-                right_result[i] = tmp;
-                i++;
-            }
+            right_result[0] = result.get(0);
+            right_result[1] = result.get(result.size()-1);
             return right_result;
         }
         else {
             if (nums[end] == target && nums[start] == target) {
-                int[] right_result = new int[2];
                 right_result[0] = start;
                 right_result[1] = end;
                 return right_result;
  
             } else if (nums[start] == target) {
-                int[] right_result = new int[2];
                 right_result[0] = start;
                 right_result[1] = start;
                 return right_result;
             } else if (nums[end] == target) {
-                int[] right_result = new int[2];
                 right_result[0] = end;
                 right_result[1] = end;
                 return right_result;
@@ -127,6 +120,16 @@ public class Solution {
 
         int[] a =  {1, 2, 2}; 
         int target = 2;
+
+        /*
+        int[] a =  {1, 2, 3}; 
+        int target = 2;
+        */
+
+        /* 
+        int[] a =  {3, 3, 3}; 
+        int target = 3;
+        */
 
         int[] result = Solution.searchRange(a, target);
         
