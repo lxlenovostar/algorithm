@@ -23,7 +23,9 @@ public class Solution {
 
         if (target <= nums[0])
             return 0;
-        else if (target >= nums[nums.length - 1])
+        else if (target == nums[nums.length - 1])
+            return (nums.length - 1);
+        else if (target > nums[nums.length - 1])
             return nums.length;
         else {
             for (int i = 1; i < nums.length ; i ++) {
@@ -33,11 +35,15 @@ public class Solution {
                     continue;
             }
         }
+    
+        return 0;
     }
 
     public static void main(String[] args)
     {
-    
+        int[] a =  {1, 3}; 
+        int target = 3;
+
         /*
         int[] a =  {1, 3, 5, 6}; 
         int target = 5;
