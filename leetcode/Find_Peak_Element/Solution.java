@@ -31,9 +31,11 @@ public class Solution {
 		int low = 0;
 		int high = nums.length - 1;
 		int index = low + (high - low)/2;
-		while (low <= high) {
-			int mid = low + (high - low)/2;
 
+		while (low < high) {
+			int mid = low + (high - low)/2;
+        	System.out.printf("start mid:%d low:%d high:%d index:%d\n", mid, low, high, index);       
+		
 			if (nums[mid] > nums[mid-1] && nums[mid] > nums[mid+1]) 
 				return index;
 			else if (nums[mid] > nums[mid-1]){ 
@@ -43,6 +45,8 @@ public class Solution {
 				high = mid - 1;
 				index = low + (high - low)/2;
 			}
+        	
+			System.out.printf("end mid:%d low:%d high:%d index:%d\n", mid, low, high, index);       
 		}
  
         return index;
