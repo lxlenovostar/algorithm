@@ -6,7 +6,6 @@ public class SolutionTest {
   public void testSolution() {
 	Solution s = new Solution();
 
-	/*
     int[] a1 =  {1, 2, 3, 1}; 
     int result1 = s.findPeakElement(a1);
     assertEquals(2, result1);
@@ -22,10 +21,9 @@ public class SolutionTest {
 	int[] a4 =  {3,2,1}; 
     int result4 = s.findPeakElement(a4);
     assertEquals(0, result4);
-	*/
 
 	int[] a5 =  {3, 4, 3, 2,1}; 
     int result5 = s.findPeakElement(a5);
-    assertEquals(0, result5);
+    assertEquals(1, result5);
   }
 }
