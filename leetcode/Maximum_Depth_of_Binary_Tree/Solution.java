@@ -21,31 +21,36 @@ import java.util.*;
  * }
  */
 
-public class Solution {
-	public int find_left(TreeNode node, depth) {
-			if (node->left == null)
-				return depth;
-			else 
-				maxDepth(node->left);
+public class Solution <Key extends Comparable<Key>>{
+    public TreeNode root;
+ 
+	public class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x) { val = x; }
+ 	} 
+	
+	public void put(Key key) {
+		root = put(root, key);
 	}
 
-	public int find_right(TreeNode node, depth) {
-			if (node->right == null)
-				return depth;
-			else 
-				maxDepth(node->right);
+	private TreeNode put(Node x, Key key) {
+		if (x == null) return new TreeNode(key);
+
+		int cmp = key.compareTo(x.key);
+		if (cmp < 0)
+			return x.left = put(x.left, key);
+		else if (cmp > 0)
+			return x.right = put(x.right, key);
+		else 
+			x.val = val;
+
+		return x;
 	}
+
 
 	public int maxDepth(TreeNode root) {
-		int left_max, right_max;
-
-		left_max = find_left(root->left, 0);
-		right_max = find_right(root->right, 0);
-
-		if (left_max >= right_max)
-			return left_max;
-		else 
-			return right_max;
     }
 
 	
