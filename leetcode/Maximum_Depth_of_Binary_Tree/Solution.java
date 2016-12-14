@@ -21,7 +21,7 @@ import java.util.*;
  * }
  */
 
-public class Solution <Key extends Comparable<Key>>{
+public class Solution{
     public TreeNode root;
  
 	public class TreeNode {
@@ -31,34 +31,105 @@ public class Solution <Key extends Comparable<Key>>{
       TreeNode(int x) { val = x; }
  	} 
 	
-	public void put(Key key) {
+	public void put(int key) {
 		root = put(root, key);
 	}
 
-	private TreeNode put(Node x, Key key) {
-		if (x == null) return new TreeNode(key);
+	/* TODO: Why use this approach? */
+	private TreeNode put(TreeNode x, int key) {
+		if (x == null) { 
+        	System.out.printf("fuck1\n");       
+			return new TreeNode(key);
+		}
 
-		int cmp = key.compareTo(x.key);
-		if (cmp < 0)
-			return x.left = put(x.left, key);
-		else if (cmp > 0)
-			return x.right = put(x.right, key);
-		else 
-			x.val = val;
+		int cmp = key - x.val;
+		if (cmp < 0) {
+        	System.out.printf("fuck2 x:%d\n", x.val);       
+			x.left = put(x.left, key);
+		}
+		else if (cmp > 0) {
+        	System.out.printf("fuck3 x:%d\n", x.val);       
+			x.right = put(x.right, key);
+	    }
+		else { 
+        	System.out.printf("fuck4 x:%d\n", x.val);       
+			x.val = key;
+		}
 
 		return x;
 	}
 
+	public boolean get(int key) {
+		return get(root, key);
+	}
+
+	private boolean get(TreeNode x, int key) {
+		if (x == null) { 
+        	System.out.printf("get1\n");       
+			return false;
+		}
+
+		int cmp = key - x.val;
+		if (cmp < 0) { 
+        	System.out.printf("get2, x:%d\n", x.val);       
+			return get(x.left, key);
+		}
+		else if (cmp > 0) { 
+        	System.out.printf("get3, x:%d\n", x.val);       
+			return get(x.right, key);
+		}
+		else { 
+        	System.out.printf("get4, x:%d\n", x.val);       
+			return true;
+		}
+	}
+
+   /** 
+     * Returns the keys in the BST in level order (for debugging).
+     *
+     * @return the keys in the BST in level order traversal
+     */
+	/*
+    public Iterable<Key> levelOrder() {
+        Queue<Key> keys = new Queue<Key>();
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        queue.enqueue(root);
+        while (!queue.isEmpty()) {
+            TreeNode x = queue.dequeue();
+            if (x == null) continue;
+            keys.enqueue(x.val);
+            queue.enqueue(x.left);
+            queue.enqueue(x.right);
+        }
+        return keys;
+    }  
+	*/
 
 	public int maxDepth(TreeNode root) {
+		return 0;
     }
 
 	
     public static void main(String[] args)
     {
-        //int[] a =  {1, 2, 3, 1}; 
-        //int result = Solution.findPeakElement(a);
-        //System.out.printf("%d:\n", result);       
+		Solution so = new Solution();
+		so.put(1);
+        System.out.printf("\n");       
+		so.put(3);
+        System.out.printf("\n");       
+		so.put(2);
+
+		int result = so.get(1) == true ? 1 : 0;
+        System.out.printf("%d\n", result);       
+		result = so.get(3) == true ? 1 : 0;
+        System.out.printf("%d\n", result);       
+		result = so.get(2) == true ? 1 : 0;
+        System.out.printf("%d\n", result);       
+
+		/*
+		 for (int i : so.levelOrder())
+        	System.out.printf("%d:", i);       
+		*/
     }
 }
 
