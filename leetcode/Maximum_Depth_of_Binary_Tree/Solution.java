@@ -90,9 +90,8 @@ public class Solution{
      *
      * @return the keys in the BST in level order traversal
      */
-	/*
-    public Iterable<Key> levelOrder() {
-        Queue<Key> keys = new Queue<Key>();
+    public Iterable<Integer> levelOrder() {
+        Queue<Integer> keys = new Queue<Integer>();
         Queue<TreeNode> queue = new Queue<TreeNode>();
         queue.enqueue(root);
         while (!queue.isEmpty()) {
@@ -104,7 +103,6 @@ public class Solution{
         }
         return keys;
     }  
-	*/
 
 	private int get_maxdepth(TreeNode node, int depth)
 	{
