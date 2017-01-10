@@ -6,8 +6,6 @@
  The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 
  TODO:
- 1. 使用queue类
- 2. 感觉树的形状不对　　
  */
 
 import java.util.*;
@@ -36,7 +34,6 @@ public class Solution{
 		root = put(root, key);
 	}
 
-	/* TODO: Why use this approach? */
 	private TreeNode put(TreeNode x, int key) {
 		if (x == null) { 
         	//System.out.printf("fuck1\n");       
@@ -104,25 +101,30 @@ public class Solution{
         return keys;
     }  
 
+	/* TODO: 这算法有问题 */
 	private int get_maxdepth(TreeNode node, int depth)
 	{
+		int left_depth = depth;
+		int right_depth = depth;
+
+        System.out.printf("fuck0 depth:%d\n", depth);       
+
 		if (node == null) {
-        	System.out.printf("fuck1 node:%d\n", node.val);       
+        	System.out.printf("fuck1 node:%d, depth:%d\n", node.val, depth);       
 			return depth;
 		}
 
-		int left_depth = 0;
-		int right_depth = 0;
-
 		if (node.left != null) {
-        	System.out.printf("fuck2 node:%d\n", node.val);       
+        	System.out.printf("fuck2 node:%d, node.left.val:%d, depth:%d\n", node.val, node.left.val, depth);       
 			left_depth = get_maxdepth(node.left, depth+1);	
 		}
 	
 		if (node.right != null) {
-        	System.out.printf("fuck3 node:%d\n", node.val);       
+        	System.out.printf("fuck3 node:%d, node.right.val:%d, depth:%d\n", node.val, node.right.val, depth);       
 			right_depth = get_maxdepth(node.right, depth+1);	
 		}
+
+        System.out.printf("left:%d, right:%d\n", left_depth, right_depth);       
 
 		if (left_depth >= right_depth)
 			return left_depth;
@@ -132,18 +134,18 @@ public class Solution{
 
 	public int maxDepth() {
 		int maxdepth = get_maxdepth(root, 0);
-		return 0;
+		return maxdepth;
     }
 
 	
     public static void main(String[] args)
     {
 		Solution so = new Solution();
-		so.put(1);
+		so.put(2);
         System.out.printf("\n");       
 		so.put(3);
         System.out.printf("\n");       
-		so.put(2);
+		so.put(1);
 
 		int result = so.get(1) == true ? 1 : 0;
         System.out.printf("%d\n", result);       
@@ -155,10 +157,9 @@ public class Solution{
         System.out.printf("\nnew begin\n");       
 		result = so.maxDepth();
         System.out.printf("maxdepth:%d\n", result);       
-		/*
-		 for (int i : so.levelOrder())
+		 
+		for (int i : so.levelOrder())
         	System.out.printf("%d:", i);       
-		*/
     }
 }
 
