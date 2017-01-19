@@ -101,30 +101,18 @@ public class Solution{
         return keys;
     }  
 
-	/* TODO: 这算法有问题 */
 	private int get_maxdepth(TreeNode node, int depth)
 	{
-		int left_depth = depth;
-		int right_depth = depth;
-
-        System.out.printf("fuck0 depth:%d\n", depth);       
+		int left_depth = depth + 1;
+		int right_depth = depth + 1;
 
 		if (node == null) {
-        	System.out.printf("fuck1 node:%d, depth:%d\n", node.val, depth);       
 			return depth;
 		}
 
-		if (node.left != null) {
-        	System.out.printf("fuck2 node:%d, node.left.val:%d, depth:%d\n", node.val, node.left.val, depth);       
-			left_depth = get_maxdepth(node.left, depth+1);	
-		}
+		left_depth = get_maxdepth(node.left, depth+1);	
 	
-		if (node.right != null) {
-        	System.out.printf("fuck3 node:%d, node.right.val:%d, depth:%d\n", node.val, node.right.val, depth);       
-			right_depth = get_maxdepth(node.right, depth+1);	
-		}
-
-        System.out.printf("left:%d, right:%d\n", left_depth, right_depth);       
+		right_depth = get_maxdepth(node.right, depth+1);	
 
 		if (left_depth >= right_depth)
 			return left_depth;
@@ -141,6 +129,11 @@ public class Solution{
     public static void main(String[] args)
     {
 		Solution so = new Solution();
+		int result;
+
+		so.put(0);
+
+		/*
 		so.put(2);
         System.out.printf("\n");       
 		so.put(3);
@@ -153,13 +146,16 @@ public class Solution{
         System.out.printf("%d\n", result);       
 		result = so.get(2) == true ? 1 : 0;
         System.out.printf("%d\n", result);       
+		*/
 
         System.out.printf("\nnew begin\n");       
 		result = so.maxDepth();
         System.out.printf("maxdepth:%d\n", result);       
 		 
+		/*
 		for (int i : so.levelOrder())
         	System.out.printf("%d:", i);       
+		*/
     }
 }
 
