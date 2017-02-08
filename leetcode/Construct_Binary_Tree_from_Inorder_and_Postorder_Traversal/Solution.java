@@ -126,6 +126,16 @@ public class Solution{
 		return maxdepth;
     }
 
+	public int maxDepth_1(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return Math.max(left, right) + 1;
+    }
+
 	public TreeNode buildTree(int[] inorder, int[] postorder) {
         
     }
@@ -162,4 +172,3 @@ public class Solution{
 		*/
     }
 }
-
