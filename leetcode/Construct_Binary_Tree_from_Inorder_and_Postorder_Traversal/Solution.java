@@ -157,7 +157,8 @@ public class Solution{
     }	
 
 	private int findPosition(int[] src, int start, int end, int key) {
-		if (start < end || start < 0)
+        System.out.printf("start:%d end:%d key:%d\n", start, end, key);       
+		if (end < start || start < 0)
 			return -1;
 
 		for (int i = start; i <= end; i++) {
@@ -170,12 +171,13 @@ public class Solution{
 	}
 
 	private TreeNode help_BuildTree(int[] inorder, int instart, int inend, int[] postorder, int poststart, int postend) {
-		if (instart > inend || postend < 0) {
+		if (instart > inend || postend < 0 || poststart < 0) {
             return null;
         }
 
         TreeNode root = new TreeNode(postorder[postend]);
         int position = findPosition(inorder, instart, inend, postorder[postend]);
+        System.out.printf("instart:%d inend:%d poststart:%d postend:%d position:%d\n", instart, inend, poststart, postend, position);       
 
 		root.left = help_BuildTree(inorder, instart, position, postorder, poststart, poststart + (position - instart - 1)); 
 		root.right = help_BuildTree(inorder, position+1, inend, postorder, poststart + (position - instart - 1) + 1, postend - 1); 
@@ -193,38 +195,26 @@ public class Solution{
         }
 
         return help_BuildTree(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
-
-		/*int i, left_len, right_len;
-		int root = postorder[postorder.length -1];
-		this.put(root);
-
-		for(i = 0; i < inorder.length; i++) {
-			if (inorder[i] == root)
-				break;
-			else {
-				//BUG
-			}
-		}	
-
-		left_len = i + 1;
-		right_len = inorder.length - left_len - 1;
-
-		int[] inorder_left = new int[left_len];
-		System.arraycopy(inorder, );
-		int[] postorder_left = new int[left_len];
-
-		int[] inorder_right = new int[right_len];
-		int[] postorder_right = new int[right_len];
-
-		buildTree(inorder_left, postorder_left);
-		buildTree(inorder_right, postorder_right);
-		*/
     }
 	
     public static void main(String[] args)
     {
 		int result;
 		Solution so = new Solution();
+
+		int[] inorder = {4, 2, 5, 1, 6, 3, 7}; 
+		int[] postorder = {4, 5, 2, 6, 7, 3, 1};
+
+	 	so.root = so.buildTree(inorder, postorder);
+
+		/*
+        System.out.printf("\nnew begin\n");       
+		result = so.maxDepth();
+        System.out.printf("maxdepth:%d\n", result);       
+		*/
+		 
+		for (int i : so.levelOrder())
+        	System.out.printf("%d:", i);       
 
 		/*
 		so.put(0);
@@ -241,17 +231,5 @@ public class Solution{
 		result = so.get(2) == true ? 1 : 0;
         System.out.printf("%d\n", result);       
 		*/
-
-		int[] inorder = {4, 2, 5, 1, 6, 3, 7}; 
-		int[] postorder = {4, 5, 2, 6, 7, 3, 1};
-
-	 	so.root = so.buildTree(inorder, postorder);
- 
-        System.out.printf("\nnew begin\n");       
-		result = so.maxDepth();
-        System.out.printf("maxdepth:%d\n", result);       
-		 
-		for (int i : so.levelOrder())
-        	System.out.printf("%d:", i);       
     }
 }
