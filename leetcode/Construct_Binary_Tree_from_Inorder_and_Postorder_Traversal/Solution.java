@@ -157,7 +157,7 @@ public class Solution{
     }	
 
 	private int findPosition(int[] src, int start, int end, int key) {
-        System.out.printf("start:%d end:%d key:%d\n", start, end, key);       
+        //System.out.printf("start:%d end:%d key:%d\n", start, end, key);       
 		if (end < start || start < 0)
 			return -1;
 
@@ -177,9 +177,12 @@ public class Solution{
 
         TreeNode root = new TreeNode(postorder[postend]);
         int position = findPosition(inorder, instart, inend, postorder[postend]);
-        System.out.printf("instart:%d inend:%d poststart:%d postend:%d position:%d\n", instart, inend, poststart, postend, position);       
+        //System.out.printf("instart:%d inend:%d poststart:%d postend:%d position:%d\n", instart, inend, poststart, postend, position);       
 
-		root.left = help_BuildTree(inorder, instart, position, postorder, poststart, poststart + (position - instart - 1)); 
+		//if (position == -1)
+			//return null;
+
+		root.left = help_BuildTree(inorder, instart, position - 1, postorder, poststart, poststart + (position - instart - 1)); 
 		root.right = help_BuildTree(inorder, position+1, inend, postorder, poststart + (position - instart - 1) + 1, postend - 1); 
 
 		return root;
