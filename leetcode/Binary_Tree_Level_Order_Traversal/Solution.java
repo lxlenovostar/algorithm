@@ -11,6 +11,14 @@
 	print node 
     queue.add(root.left)
     queue.add(root.right)
+
+ 2. 由于需要获得具体的层级，需要使用两个队列来实现，Q1和Q2.
+  while(!Q1 and !Q2) 
+    if Q1 非空 
+      处理Q1，将数据放入Q2
+   
+    if Q2 非空 
+      处理Q2, 将数据放入Q1
  */
 
 import java.util.*;
