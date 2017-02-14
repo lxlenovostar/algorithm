@@ -209,25 +209,51 @@ public class Solution{
         return help_BuildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
     }
 
-	public List<List<Integer>> levelOrder(TreeNode root) {
-		List<List<Integer>> result = new ArrayList<ArrayList<Integer>>;
-		ArrayList<TreeNode> Q1list = new ArrayList<TreeNode>;
-		//ArrayList<TreeNode> Q2list = new ArrayList<TreeNode>;
-		Qlist.add(root);		
+	public List<List<Integer>> new_levelOrder(TreeNode root) {
+		List<List<Integer>> result = new ArrayList<List<Integer>>();
 
-		while(!Q1list.isEmpty()) {
-			TreeNode node = Q1list.remove(0);
+		if (root == null)
+			return result;
+
+		ArrayList<TreeNode> Q1list = new ArrayList<TreeNode>();
+		ArrayList<TreeNode> Q2list = new ArrayList<TreeNode>();
+		Q1list.add(root);		
+
+		while(!Q1list.isEmpty() || !Q2list.isEmpty()) {
+			ArrayList<Integer> q1_result = new ArrayList<Integer>(); 
+			ArrayList<Integer> q2_result = new ArrayList<Integer>(); 
+
+			while (!Q1list.isEmpty()) {
+				TreeNode node = Q1list.remove(0);
+				q1_result.add(node.val);
+
+				if (node.left != null)
+					Q2list.add(node.left);
+				
+				if (node.right != null)
+					Q2list.add(node.right);
+			}
+		
+			if (!q1_result.isEmpty()) 
+				result.add(q1_result);	
+
+			while (!Q2list.isEmpty()) {
+				TreeNode node = Q2list.remove(0);
+				q2_result.add(node.val);
+
+				if (node.left != null)
+					Q1list.add(node.left);
+				
+				if (node.right != null)
+					Q1list.add(node.right);
+
+			}
 			
-			//放入一个list
-			ArrayList<Integer> m_result = new ArrayList<Integer>; 
-			m_result.add(node.val);
-
-            if (x == null) continue;
-
-			Q2list.add(node.left);
-			Q2list.add(node.right);
-			
+			if (!q2_result.isEmpty()) 
+				result.add(q2_result);	
 		}
+
+		return result;
 			
 	}
 	
