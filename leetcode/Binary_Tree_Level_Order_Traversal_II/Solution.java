@@ -1,9 +1,11 @@
 /*
- 102. Binary Tree Level Order Traversal
+ 107. Binary Tree Level Order Traversal II
 
- Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+ Given a binary tree, return the bottom-up level order traversal of its nodes' values. 
+ (ie, from left to right, level by level from leaf to root).
 
  TODO:
+	1.理解深度和广度优先的时间空间复杂度　
  */
 
 import java.util.*;
@@ -194,8 +196,11 @@ public class Solution{
         return help_BuildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
     }
 
-	public List<List<Integer>> new_levelOrder(TreeNode root) {
+	public List<List<Integer>> levelOrderBottom(TreeNode root) {
+		Queue q = new LinkedList();
+
 		List<List<Integer>> result = new ArrayList<List<Integer>>();
+		int level = 0;
 
 		if (root == null)
 			return result;
@@ -204,13 +209,13 @@ public class Solution{
 		ArrayList<TreeNode> Q2list = new ArrayList<TreeNode>();
 		Q1list.add(root);		
 
-		while(!Q1list.isEmpty() || !Q2list.isEmpty()) {
-			ArrayList<Integer> q1_result = new ArrayList<Integer>(); 
-			ArrayList<Integer> q2_result = new ArrayList<Integer>(); 
+		while(!Q1list.isEmpty()) {
+			ArrayList<Integer> q_result = new ArrayList<Integer>(); 
+			Q2list.clear();
 
-			while (!Q1list.isEmpty()) {
-				TreeNode node = Q1list.remove(0);
-				q1_result.add(node.val);
+			for (int i = 0; i < Q1list.size(); i++) {
+				TreeNode node = Q1list.get(i);
+				q_result.add(node.val);
 
 				if (node.left != null)
 					Q2list.add(node.left);
@@ -218,151 +223,30 @@ public class Solution{
 				if (node.right != null)
 					Q2list.add(node.right);
 			}
+
+			//swap q1 and q2 
+			ArrayList<TreeNode> temp = Q1list;
+			Q1list = Q2list;
+			Q2list = temp;
 		
-			if (!q1_result.isEmpty()) 
-				result.add(q1_result);	
-
-			while (!Q2list.isEmpty()) {
-				TreeNode node = Q2list.remove(0);
-				q2_result.add(node.val);
-
-				if (node.left != null)
-					Q1list.add(node.left);
-				
-				if (node.right != null)
-					Q1list.add(node.right);
-
+			if (result.size() == 0)
+               	result.add(q_result);
+			else { 
+               	result.add(result.size() - level - 1, q_result);
+				++level;
 			}
-			
-			if (!q2_result.isEmpty()) 
-				result.add(q2_result);	
 		}
 
 		return result;
 	}
-	
-	/* 使用广度优先搜索只需要一个队列　*/
-    public ArrayList<ArrayList<Integer>> BFSlevelOrder(TreeNode root) {
-        ArrayList result = new ArrayList();
-
-        if (root == null) {
-            return result;
-        }
-
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.offer(root);
-
-        while (!queue.isEmpty()) {
-            ArrayList<Integer> level = new ArrayList<Integer>();
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode head = queue.poll();
-                level.add(head.val);
-                if (head.left != null) {
-                    queue.offer(head.left);
-                }
-                if (head.right != null) {
-                    queue.offer(head.right);
-                }
-            }
-            result.add(level);
-        }
-
-        return result;
-    }
-
-
-	/*  使用ＢＦＳ和两个队列，但是两个队列的使用更加高效。　*/
-	public ArrayList<ArrayList<Integer>> levelOrder_2(TreeNode root) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        if (root == null) {
-            return result;
-        }
-        
-        ArrayList<TreeNode> Q1 = new ArrayList<TreeNode>();
-        ArrayList<TreeNode> Q2 = new ArrayList<TreeNode>();
-
-        Q1.add(root);
-        while (Q1.size() != 0) {
-            ArrayList<Integer> level = new ArrayList<Integer>();
-            Q2.clear();
-            for (int i = 0; i < Q1.size(); i++) {
-                TreeNode node = Q1.get(i);
-                level.add(node.val);
-                if (node.left != null) {
-                    Q2.add(node.left);
-                }
-                if (node.right != null) {
-                    Q2.add(node.right);
-                }
-            }
-            
-            // swap q1 and q2
-            ArrayList<TreeNode> temp = Q1;
-            Q1 = Q2;
-            Q2 = temp;
-            
-            // add to result
-            result.add(level);
-        }
-        
-        return result;
-    }
-
-	 /* BFS, queue with dummy node */
-	 public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        if (root == null) {
-            return result;
-        }
-        
-        Queue<TreeNode> Q = new LinkedList<TreeNode>();
-        Q.offer(root);
-        Q.offer(null); // dummy node
-        
-        ArrayList<Integer> level = new ArrayList<Integer>();
-        while (!Q.isEmpty()) {
-            TreeNode node = Q.poll();
-            if (node == null) {
-                if (level.size() == 0) {
-                    break;
-                }
-                result.add(level);
-                level = new ArrayList<Integer>();
-                Q.offer(null); // add a new dummy node
-                continue;
-            }
-            
-            level.add(node.val);
-            if (node.left != null) {
-                Q.offer(node.left);
-            }
-            if (node.right != null) {
-                Q.offer(node.right);
-            }
-        }
-        
-        return result;
-    	}
 
     public static void main(String[] args)
     {
-		int result;
-		Solution so = new Solution();
-
-		int[] preorder = {1, 2, 4, 5, 3, 6, 7};
-		int[] inorder = {4, 2, 5, 1, 6, 3, 7}; 
-
-	 	so.root = so.buildTree(preorder, inorder);
-
 		/*
         System.out.printf("\nnew begin\n");       
 		result = so.maxDepth();
         System.out.printf("maxdepth:%d\n", result);       
 		*/
-		 
-		for (int i : so.levelOrder())
-        	System.out.printf("%d:", i);       
 
 		/*
 		so.put(0);
