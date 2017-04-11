@@ -1,7 +1,8 @@
 /*
- 102. Binary Tree Level Order Traversal
+ 103. Binary Tree Zigzag Level Order Traversal
 
- Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+ Given a binary tree, return the zigzag level order traversal of its nodes' values. 
+ (ie, from left to right, then right to left for the next level and alternate between).
 
  TODO:
  */
@@ -193,36 +194,6 @@ public class Solution{
 
         return help_BuildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
     }
-	
-	/* 使用广度优先搜索只需要一个队列　*/
-    /*public ArrayList<ArrayList<Integer>> BFSlevelOrder(TreeNode root) {
-        ArrayList result = new ArrayList();
-
-        if (root == null) {
-            return result;
-        }
-
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.offer(root);
-
-        while (!queue.isEmpty()) {
-            ArrayList<Integer> level = new ArrayList<Integer>();
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode head = queue.poll();
-                level.add(head.val);
-                if (head.left != null) {
-                    queue.offer(head.left);
-                }
-                if (head.right != null) {
-                    queue.offer(head.right);
-                }
-            }
-            result.add(level);
-        }
-
-        return result;
-    }*/
 
 	/*  使用BFS和两个队列，但是两个队列的使用更加高效。　*/
 	public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
@@ -235,20 +206,26 @@ public class Solution{
         ArrayList<TreeNode> Q2 = new ArrayList<TreeNode>();
 
         Q1.add(root);
+		boolean flag = true;
         while (Q1.size() != 0) {
             ArrayList<Integer> level = new ArrayList<Integer>();
             Q2.clear();
 			int q2_size = 0;
             for (int i = 0; i < Q1.size(); i++) {
                 TreeNode node = Q1.get(i);
-                level.add(node.val);
+
+				if (flag)
+                	level.add(node.val);
+				else 
+                	level.add(0, node.val);
+
                 if (node.left != null) {
 					q2_size = Q2.size();
                     Q2.add(node.left);
                 }
                 if (node.right != null) {
 					q2_size = Q2.size();
-                    Q2.add(0, node.right);
+                    Q2.add(node.right);
                 }
             }
             
@@ -256,6 +233,8 @@ public class Solution{
             ArrayList<TreeNode> temp = Q1;
             Q1 = Q2;
             Q2 = temp;
+
+			flag = !flag;
             
             // add to result
             result.add(level);
