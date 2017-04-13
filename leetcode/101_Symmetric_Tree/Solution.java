@@ -37,21 +37,17 @@ public class Solution{
 
 	private TreeNode put(TreeNode x, int key) {
 		if (x == null) { 
-        	//System.out.printf("fuck1\n");       
 			return new TreeNode(key);
 		}
 
 		int cmp = key - x.val;
 		if (cmp < 0) {
-        	//System.out.printf("fuck2 x:%d\n", x.val);       
 			x.left = put(x.left, key);
 		}
 		else if (cmp > 0) {
-        	//System.out.printf("fuck3 x:%d\n", x.val);       
 			x.right = put(x.right, key);
 	    }
 		else { 
-        	//System.out.printf("fuck4 x:%d\n", x.val);       
 			x.val = key;
 		}
 
@@ -64,21 +60,17 @@ public class Solution{
 
 	private boolean get(TreeNode x, int key) {
 		if (x == null) { 
-        	//System.out.printf("get1\n");       
 			return false;
 		}
 
 		int cmp = key - x.val;
 		if (cmp < 0) { 
-        	//System.out.printf("get2, x:%d\n", x.val);       
 			return get(x.left, key);
 		}
 		else if (cmp > 0) { 
-        	//System.out.printf("get3, x:%d\n", x.val);       
 			return get(x.right, key);
 		}
 		else { 
-        	//System.out.printf("get4, x:%d\n", x.val);       
 			return true;
 		}
 	}
@@ -177,7 +169,6 @@ public class Solution{
 
         TreeNode root = new TreeNode(preorder[prestart]);
         int position = findPosition(inorder, instart, inend, preorder[prestart]);
-        //System.out.printf("instart:%d inend:%d prestart:%d preend:%d position:%d\n", instart, inend, prestart, pretend, position);       
 
 		root.left = help_BuildTree(preorder, prestart+1, prestart + 1 + (position - instart - 1), inorder, instart, position -1 );
 		root.right = help_BuildTree(preorder, prestart + 1 + (position - instart - 1) + 1, preend, inorder, position + 1, inend);
