@@ -86,7 +86,11 @@ public class Solution{
         queue.enqueue(root);
         while (!queue.isEmpty()) {
             TreeNode x = queue.dequeue();
-            if (x == null) continue;
+            if (x == null) {
+				/* -1 stands for null node. */
+				keys.enqueue(-1);
+				continue;
+			}
             keys.enqueue(x.val);
             queue.enqueue(x.left);
             queue.enqueue(x.right);
@@ -202,19 +206,31 @@ public class Solution{
 
 		    for (int i = 0; i < Q1.size(); i++) {
 		    	TreeNode node = Q1.get(i);
-																																				level.add(node.val);
-																																				if (node.left != null) {
-				    Q2.add(node.left);
-				}
+				if (node == null) {
+					level.add(-1);
+				} else {
+					level.add(node.val);
+				
+					if (node.left != null) {
+				    	Q2.add(node.left);
+					} else {
+						Q2.add(null);
+					} 
 
-				if (node.right != null) {
-					Q2.add(node.right);
+					if (node.right != null) {
+						Q2.add(node.right);
+					} else {
+						Q2.add(null);
+					}
 				}
 			}
 				
 			ArrayList<TreeNode> temp = Q1;
 			Q1 = Q2;
 			Q2 = temp;
+
+			for (int i = 0; i < level.size(); i++) 
+				System.out.printf(";%d\n", level.get(i));
 
 			int j = level.size() - 1;	
 			for (int i = 0; i < level.size()/2; i++) {
@@ -229,15 +245,5 @@ public class Solution{
 
     public static void main(String[] args)
     {
-		int result;
-		Solution so = new Solution();
-
-		int[] preorder = {1, 2, 4, 5, 3, 6, 7};
-		int[] inorder = {4, 2, 5, 1, 6, 3, 7}; 
-
-	 	so.root = so.buildTree(preorder, inorder);
-		 
-		for (int i : so.levelOrder())
-        	System.out.printf("%d:", i);       
     }
 }
