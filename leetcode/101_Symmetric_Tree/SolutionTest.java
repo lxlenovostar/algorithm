@@ -23,7 +23,7 @@ public class SolutionTest {
 	for (int i : so.levelOrder())
        	System.out.printf("%d:", i);       
 
-	boolean result = so.isSymmetric(so.root);
+	boolean result = so.r_isSymmetric(so.root);
     System.out.printf("\nresult:%d", result == true ? 1 : 0);       
 	/*	
 	for (int i : so.levelOrder())
