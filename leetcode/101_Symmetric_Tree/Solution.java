@@ -277,14 +277,34 @@ public class Solution{
 		ArrayList<TreeNode> Q1 = new ArrayList<TreeNode>();
 		ArrayList<TreeNode> Q2 = new ArrayList<TreeNode>();
 
-		if (root.left != null)
-			Q1.add(root.left)
-		if (root.right != null)
-			Q2.add(root.right)
+		Q1.add(root.left);
+		Q2.add(root.right);
 
-		while(Q1.empty() && Q2.empty()) {
+		while(!Q1.isEmpty() && !Q2.isEmpty()) {
+			TreeNode left = Q1.get(0);
+			TreeNode right = Q2.get(0);
+					
+			Q1.remove(0);
+			Q2.remove(0);
+
+			if ((left == null && right != null) || (right == null && left != null))
+					return false;
+
+			if (left == null && right == null) {
+				continue;
+			}
+			else  {
+				if (left.val != right.val)
+					return false;
 			
+				Q1.add(left.left);	
+				Q1.add(left.right);	
+				Q2.add(right.right);	
+				Q2.add(right.left);	
+			}
 		}
+
+		return true;
 	}
  
 	public static void main(String[] args)
