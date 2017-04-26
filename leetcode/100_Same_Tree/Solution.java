@@ -1,10 +1,9 @@
 /*
- 101. Symmetric Tree
+ 100. Same Tree
+ 
+ Given two binary trees, write a function to check if they are equal or not.
 
- Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
-
- Note:
- Bonus points if you could solve it both recursively and iteratively.
+ Two binary trees are considered equal if they are structurally identical and the nodes have the same value.
 
  TODO:
  */
