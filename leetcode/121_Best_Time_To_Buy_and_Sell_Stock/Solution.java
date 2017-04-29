@@ -24,7 +24,28 @@ Example 2:
 import java.util.*;
 
 public class Solution{
-	
+	public int maxProfit(int[] prices) {
+		int min_index = 0; 
+		int min_value = Integer.MAX_VALUE;
+		int result = 0;
+
+		for (int i = 0; i < prices.length; i++) {
+			if (prices[i] < min_value) {
+				min_index = i;
+				min_value = prices[i];
+			}
+		}
+
+		if (min_index == (prices.length - 1))
+			return result;
+	   
+		for (int i = min_index + 1; i < prices.length; i++) {
+			if ((prices[i] - min_value) > result) 
+				result = (prices[i] - min_value);
+		}
+
+		return result;
+	}	 
 
 	public static void main(String[] args)
     {
