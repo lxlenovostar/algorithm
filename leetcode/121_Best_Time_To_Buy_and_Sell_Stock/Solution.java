@@ -25,26 +25,21 @@ import java.util.*;
 
 public class Solution{
 	public int maxProfit(int[] prices) {
-		int min_index = 0; 
-		int min_value = Integer.MAX_VALUE;
-		int result = 0;
+		if (prices.length < 2)
+			return 0;
 
-		for (int i = 0; i < prices.length; i++) {
-			if (prices[i] < min_value) {
-				min_index = i;
-				min_value = prices[i];
-			}
+	    int profit = prices[1] - prices[0];	
+	  	int minp = prices[0];
+
+		for (int i = 2; i < prices.length; i++) {
+			minp = Math.min(minp, prices[i-1]);
+		    profit = Math.max(profit, prices[i] - minp);	
 		}
 
-		if (min_index == (prices.length - 1))
-			return result;
-	   
-		for (int i = min_index + 1; i < prices.length; i++) {
-			if ((prices[i] - min_value) > result) 
-				result = (prices[i] - min_value);
-		}
+		if (profit < 0)
+			return 0;
 
-		return result;
+		return profit;
 	}	 
 
 	public static void main(String[] args)
