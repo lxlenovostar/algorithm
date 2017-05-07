@@ -22,37 +22,68 @@
 class Solution {
 	public:
 		ListNode* deleteDuplicates(ListNode* head) {
+			ListNode *result = head;
 			if(head == NULL || head->next == NULL) {
-				return head;
+				return result;
 			} 
 				
-			ListNode* fast = head;
-			ListNode* slow = head;
-			while(fast->next != NULL && fast->next->next != NULL) {
-				fast = fast->next->next;
-				slow = slow->next;
-						
-				if(slow == fast) {
-					return true;
+			while(head->next != NULL) {
+				ListNode* tmp = head->next;
+
+				if (head->val == tmp->val) {
+					head->next = tmp->next;	
+					delete tmp;
+				} else {
+					head = head->next;	
 				}
 			} 
 				
-			return false;
+			return result;
 		}
+		
+		void freeList(ListNode* head) {
+			if(head == NULL) {
+				return ;
+			} 
+
+			ListNode* next_head = head->next;
+			delete head;
+
+			while(next_head->next != NULL) {
+				ListNode* tmp = next_head->next;
+				delete next_head;
+				next_head = tmp;	
+			}
+		}
+			
+		void printList(ListNode* head) {
+			if(head == NULL) {
+				return ;
+			} 
+
+			std::cout << head->val << std::endl;	
+			while(head->next != NULL) {
+				head = head->next;
+				std::cout << head->val << std::endl;	
+			}
+		}
+
+
 };
 
 int  main() {
-	ListNode *a = new ListNode(1);
+	ListNode *a = new ListNode(2);
 	ListNode *b = new ListNode(2);
 	b->next = a;
 	ListNode *c = new ListNode(3);
 	c->next = b;
 	ListNode *d = new ListNode(4);
 	d->next = c;
-	a->next = d;
 
 	Solution *test = new Solution();
-	std::cout << test->hasCycle(d) << std::endl;	
+	ListNode *head =  test->deleteDuplicates(d);	
+	test->printList(head);
+	test->freeList(head);
 
 	return 0;	
 }
