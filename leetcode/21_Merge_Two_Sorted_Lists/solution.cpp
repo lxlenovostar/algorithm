@@ -25,33 +25,76 @@ class Solution {
 			else if (!l1 && !l2)
 				return NULL;
 			else {
-				ListNode newhead(0);		
-				ListNode current = NULL;
+				ListNode *head = NULL;		
+				ListNode *current = NULL;
+				
+				if (l1->val <= l2->val) {
+					head = l1;
+					current = l1;
+					l1 = l1->next;
+				} else {
+					head = l2;
+					current = l2;
+					l2 = l2->next;
+				}
 
 				while(l1 != NULL && l2 != NULL) {
-					if (l1.val <= l2.val) {
-						if (!newhead.next)
-							newhead.next = l1;
-
+					if (l1->val <= l2->val) {
+						current->next = l1;
 						current = l1;
 						l1 = l1->next;
 					}
 					else { 	
-						if (!newhead.next)
-							newhead.next = l2;
-
+						current->next = l2;
 						current = l2;
 						l2 = l2->next;
 					}
-
-					current = current->next;
 				}
 
+				if (l1 && !l2)
+					current->next = l1;
+				else if (l2 && !l1)
+					current->next = l2;
 
-				return newhead.next;
+				return head;
 			}
 		}
-		
+	
+		ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
+			/*
+			 * 实现的优点:
+			 * 1.处理头指针很棒!
+			 * 2.没有那么多的if判断.
+			 * */
+			ListNode dummy(0);
+			ListNode* p = &dummy;
+			
+			while(l1 && l2) {
+				int val1 = l1->val;
+				int val2 = l2->val;
+						
+				//哪个节点小， 就挂载， 同时移动到下一个节点
+				if(val1 < val2) {
+					p->next = l1;
+					p = l1;
+					l1 = l1->next;
+				} else {
+					p->next = l2;
+					p = l2;
+					l2 = l2->next;
+				}
+			} 
+						
+			//这里处理还未挂载的节点
+			if(l1) {
+				p->next = l1;
+			} else if(l2) {
+				p->next = l2;
+			} 
+			
+			return dummy.next;
+		}
+
 		void printList(ListNode* head) {
 			if(head == NULL) {
 				return ;
@@ -83,19 +126,19 @@ class Solution {
 };
 
 int  main() {
-	ListNode *a = new ListNode(2);
+	ListNode *a = new ListNode(3);
 	ListNode *b = new ListNode(2);
 	b->next = a;
-	/*
-	ListNode *c = new ListNode(1);
-	c->next = b;
+	ListNode *c = new ListNode(4);
 	ListNode *d = new ListNode(1);
 	d->next = c;
-	*/
 
 	Solution *test = new Solution();
+	std::cout << "list1" << std::endl;
 	test->printList(b);
-	ListNode *head =  test->deleteDuplicates(b);	
+	std::cout << "list2" << std::endl;
+	test->printList(d);
+	ListNode *head =  test->mergeTwoLists(NULL, NULL);	
 	std::cout << "finish." << std::endl;
 	test->printList(head);
 	test->freeList(head);
