@@ -24,31 +24,30 @@
 class Solution {
 	public:
 		struct ListNode* reverseBetween(struct ListNode* head, int m, int n) {
-			int start = m;
-			ListNode dummy(0);
-			ListNode* prev = &dummy;
-			prev->next = head;
-
-			if (m < n)
+			if (!head)
 				return head;
 
-			while(m > 1) {
-				prev = prev->next;
-				m--;
-			} 
+			ListNode dummy(0);
+			dummy.next = head;
 
-			ListNode* p1 = prev;
-			ListNode* p2 = p1->next;
-			ListNode* p3 = p2->next;
-
-			while(start < n) {
-				start++;
-				
-				p2->next = p3->next;
-				p1->next = p3;
-				p3->next = p2;
+			ListNode *p = &dummy;
+			for(int i = 1; i < m; i++) {
+				p = p->next;
 			}
-			
+
+			ListNode *pm = p->next;
+
+			/*
+             * Note: pm and p don't change.   
+             */
+			for (int i = m; i < n; i++) {
+				ListNode *n = pm->next;
+				pm->next = n->next;
+				n->next = p->next;
+				p->next = n;
+			}
+
+			return dummy.next;
 		}
 
 		void printList(ListNode* head) {
@@ -82,19 +81,17 @@ class Solution {
 };
 
 int  main() {
-	ListNode *a = new ListNode(3);
+	ListNode *a = new ListNode(1);
 	ListNode *b = new ListNode(2);
 	b->next = a;
-	ListNode *c = new ListNode(4);
-	ListNode *d = new ListNode(1);
+	ListNode *c = new ListNode(3);
+	c->next = b;
+	ListNode *d = new ListNode(4);
 	d->next = c;
 
 	Solution *test = new Solution();
-	std::cout << "list1" << std::endl;
-	test->printList(b);
-	std::cout << "list2" << std::endl;
 	test->printList(d);
-	ListNode *head =  test->mergeTwoLists(NULL, NULL);	
+	ListNode *head =  test->reverseBetween(d, 1, 3);	
 	std::cout << "finish." << std::endl;
 	test->printList(head);
 	test->freeList(head);
