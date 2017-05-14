@@ -19,9 +19,50 @@ class Solution {
 		ListNode* sortList(ListNode* head) {
 			if (!head || !head->next)
 				return head;
+			
+			ListNode* fast = head;
+			ListNode* slow = head;
 
+			/*
+			 * a good way: find the half list.
+			 * */
+			while(fast->next && fast->next->next) {
+				fast = fast->next->next;
+				slow = slow->next;
+			}
+
+			fast = slow->next;
+			slow->next = NULL;
+
+			ListNode* p1 = sortList(head);
+			ListNode* p2 = sortList(fast);
+
+			return merge(p1, p2);
+		}
+
+		ListNode* merge(ListNode* l1, ListNode* l2) {
 			ListNode dummy(0);
-			dummy.next = head;
+			ListNode* p = &dummy;
+										
+			while(l1 && l2) {
+				int val1 = l1->val;
+				int val2 = l2->val;
+																							
+				if(val1 < val2) {
+					p->next = l1;
+					p = l1;
+					l1 = l1->next;
+				} else {
+					p->next = l2;
+					p = l2;
+					l2 = l2->next;
+				}
+			}
+
+			if (l1 && !l2)
+				p->next = l1;
+			else if (l2 && !l1)
+				p->next = l2;
 
 			return dummy.next;
 		}
@@ -67,7 +108,7 @@ int  main() {
 
 	Solution *test = new Solution();
 	test->printList(d);
-	ListNode *head =  test->swapPairs(d);	
+	ListNode *head =  test->sortList(d);	
 	std::cout << "finish." << std::endl;
 	test->printList(head);
 	test->freeList(head);
