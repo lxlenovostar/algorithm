@@ -1,5 +1,4 @@
-/*
- * 147. Insertion Sort List
+/* * 147. Insertion Sort List
  *
  * Sort a linked list using insertion sort.
  * */
@@ -21,35 +20,39 @@ class Solution {
 				return head;
 			
 			ListNode dummy(0);
+			ListNode *prev = &dummy;
 			ListNode *ph = head;
-			ListNode *pd = &dummy;
+			dummy.next = ph;
 
-			pd->next = ph;
-			pd = pd->next;
-			ph = ph->next;
+			while(prev->next) {
+				if (ph->next->val < prev->next->val) {
+					/*
+				 	 * insert ph in new list.
+				     * */
+					std::cout << "ph->next->val:" << ph->next->val << std::endl;
+					std::cout << "prev->next->val:" << prev->next->val << std::endl;
 
-			while(ph) {
-				ListNode *tmp = pd;
-				while(tmp->next) {
-					if (ph->val <= tmp->val) {
-						/*
-					 	 * insert ph in new list.
-					     * */
-						tmp1 = ph;
+					//delete a node in list.
+					ListNode *tmp1 = ph->next;
+					ListNode *tmp2 = prev->next;
+					ph->next = tmp1->next;
+
+					//insert a node in list.
+					prev->next = tmp1;
+					tmp1->next = tmp2;
+
+					if (!ph->next)
+						break;
+					
+				} else {
+					std::cout << "2 ph->next->val:" << ph->next->val << std::endl;
+					std::cout << "2 prev->next->val:" << prev->next->val << std::endl;
+
+					prev = prev->next;
+					if (ph->next->next)
 						ph = ph->next;
-						tmp1->next = tmp->next;
-						tmp->next = tmp1;
-					} else {
-						tmp = tmp->next;	
-				    }	
-				}
-
-				if (!tmp) 
-					//insert ph in tail.
-
-				pd = pd->next;
+				}	
 			}
-
 
 			return dummy.next;
 		}
@@ -85,10 +88,10 @@ class Solution {
 };
 
 int  main() {
-	ListNode *a = new ListNode(1);
-	ListNode *b = new ListNode(2);
+	ListNode *a = new ListNode(3);
+	ListNode *b = new ListNode(1);
 	b->next = a;
-	ListNode *c = new ListNode(3);
+	ListNode *c = new ListNode(2);
 	c->next = b;
 	ListNode *d = new ListNode(4);
 	d->next = c;
