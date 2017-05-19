@@ -20,38 +20,64 @@ class Solution {
 				return head;
 			
 			ListNode dummy(0);
-			ListNode *prev = &dummy;
 			ListNode *ph = head;
 			dummy.next = ph;
 
-			while(prev->next) {
-				if (ph->next->val < prev->next->val) {
-					/*
-				 	 * insert ph in new list.
-				     * */
-					std::cout << "ph->next->val:" << ph->next->val << std::endl;
-					std::cout << "prev->next->val:" << prev->next->val << std::endl;
+			while (ph->next) {
+				ListNode *prev = &dummy;
 
-					//delete a node in list.
-					ListNode *tmp1 = ph->next;
-					ListNode *tmp2 = prev->next;
-					ph->next = tmp1->next;
+				while(prev != ph) {
+					if (ph->next->val < prev->next->val) {
+						/*
+				 	 	 * insert ph in new list.
+				     	 * */
+						std::cout << "ph->next->val:" << ph->next->val << std::endl;
+						std::cout << "prev->next->val:" << prev->next->val << std::endl;
 
-					//insert a node in list.
-					prev->next = tmp1;
-					tmp1->next = tmp2;
+						//delete a node in list.
+						ListNode *tmp1 = ph->next;
+						ListNode *tmp2 = prev->next;
+						ph->next = tmp1->next;
 
-					if (!ph->next)
-						break;
+						//insert a node in list.
+						prev->next = tmp1;
+						tmp1->next = tmp2;
+
+						if (!ph->next)
+							break;
 					
-				} else {
-					std::cout << "2 ph->next->val:" << ph->next->val << std::endl;
-					std::cout << "2 prev->next->val:" << prev->next->val << std::endl;
+					} else {
+						std::cout << "2 ph->next->val:" << ph->next->val << std::endl;
+						std::cout << "2 prev->next->val:" << prev->next->val << std::endl;
 
-					prev = prev->next;
-					if (ph->next->next)
-						ph = ph->next;
-				}	
+						prev = prev->next;
+					}	
+				}
+
+				ph = ph->next;
+				if (!ph)
+					break;
+			}
+
+			return dummy.next;
+		}
+
+		 ListNode *insertionSortList(ListNode *head) {
+			ListNode dummy(0);
+			// 这个dummy的作用是，把head开头的链表一个个的插入到dummy开头的链表里
+			// 所以这里不需要dummy->next = head;
+			
+			while (head != NULL) {
+				ListNode *temp = &dummy;
+			    ListNode *next = head->next;
+				
+				while (temp->next != NULL && temp->next->val < head->val) {
+					temp = temp->next;
+				}
+			
+				head->next = temp->next;
+			    temp->next = head;
+			    head = next;
 			}
 
 			return dummy.next;
@@ -88,11 +114,11 @@ class Solution {
 };
 
 int  main() {
-	ListNode *a = new ListNode(3);
-	ListNode *b = new ListNode(1);
-	b->next = a;
-	ListNode *c = new ListNode(2);
-	c->next = b;
+	//ListNode *a = new ListNode(1);
+	//ListNode *b = new ListNode(1);
+	//b->next = a;
+	ListNode *c = new ListNode(5);
+	//c->next = b;
 	ListNode *d = new ListNode(4);
 	d->next = c;
 
