@@ -26,45 +26,30 @@ class Solution {
 			if (k <= 0 || !head)
 				return head;
 
+			int list_len = 1;
+			int cut_pos = -1;
+			ListNode *result = head;
 
-			ListNode dummy(0);
-			dummy.next = head;
-			int list_len = 0;
-			ListNode *tmp = head;
-			while(tmp) {
-				tmp = tmp->next;
+			while(result->next) {
+				result = result->next;
 				list_len++;
 			}
 
 			std::cout << "list_len:" << list_len << std::endl;
 
-			if (k == list_len)
-				return head;
+			//build a cycle.
+			result->next = head;
 
-			int pos = list_len - k - 1;
-			if (pos < 0) {
-				pos = 0;
-				k = list_len;
-			}
-				
-			tmp = head;
-			while (pos) {
-				tmp = tmp->next;
-				pos--;
-			}
-				
-			ListNode *cur = tmp->next;
-			ListNode *prev = &dummy;
-			while (cur && k) {
-				tmp->next = cur->next;
-				cur->next = prev->next;
-				prev->next = cur;
-				cur = tmp->next;
-				prev = prev->next;
-				k--;
+			cut_pos = list_len - k%list_len;
+
+			for (int i = 0; i < cut_pos; i++) {
+				result = result->next;
 			}
 
-			return dummy.next;
+			head = result->next;
+			result->next = NULL;
+
+			return head;
 		}
 
 		void printList(ListNode* head) {
@@ -98,15 +83,13 @@ class Solution {
 };
 
 int  main() {
-	/*
 	ListNode *a1 = new ListNode(5);
 	ListNode *a = new ListNode(4);
 	a->next = a1;
 	ListNode *b = new ListNode(3);
 	b->next = a;
-	*/
 	ListNode *c = new ListNode(2);
-	//c->next = b;
+	c->next = b;
 	ListNode *d = new ListNode(1);
 	d->next = c;
 
