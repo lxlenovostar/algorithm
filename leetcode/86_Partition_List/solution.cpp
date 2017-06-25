@@ -1,12 +1,13 @@
 /* 
- * 143. Reorder List
- * 
- * Given a singly linked list L: L0→L1→…→Ln-1→Ln,
- * reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
- * You must do this in-place without altering the nodes' values.
- * 
+ * 86. Partition List
+ *
+ * Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+ *
+ * You should preserve the original relative order of the nodes in each of the two partitions.
+ *
  * For example,
- * Given {1,2,3,4}, reorder it to {1,4,2,3}. 
+ * Given 1->4->3->2->5->2 and x = 3,
+ * return 1->2->2->4->3->5.
  * */
 
 #include <iostream>
@@ -24,11 +25,36 @@ class Solution {
 		 /*
 		  * similar to quick sort.
 		  * */
-		 ListNode* partition(ListNode* head, int x)
+		 ListNode* partition(ListNode* head, int x) {
 			if (head == NULL || head->next == NULL) {
 				return head;
 			}      
 
+			ListNode dummy_small_equal(0);
+			ListNode dummy_big(0);
+			ListNode *s_n = &dummy_small_equal; 
+			ListNode *b_n = &dummy_big;
+
+			if (head->val <= x) {
+				s_n->next = head;	
+			} else {
+				b_n->next = head;
+			}
+
+			while(head->next != NULL) {
+				head = head->next;	
+				if (head->val <= x) {
+					s_n = s_n->next;
+					s_n->next = head;
+				} else {
+					b_n = b_n->next;
+					b_n->next = head;
+				}
+			}
+
+			head = dummy_small_equal.next;
+			s_n->next = dummy_big.next;
+			
 			return head;
     	}
 
@@ -63,19 +89,19 @@ class Solution {
 };
 
 int  main() {
-	//ListNode *a1 = new ListNode(5);
-	ListNode *a = new ListNode(4);
-	//a->next = a1;
+	ListNode *a1 = new ListNode(1);
+	ListNode *a = new ListNode(2);
+	a->next = a1;
 	ListNode *b = new ListNode(3);
 	b->next = a;
-	ListNode *c = new ListNode(2);
+	ListNode *c = new ListNode(4);
 	c->next = b;
-	ListNode *d = new ListNode(1);
+	ListNode *d = new ListNode(5);
 	d->next = c;
 
 	Solution *test = new Solution();
 	test->printList(d);
-	ListNode *head =  test->reorderList(d);	
+	ListNode *head =  test->partition(d, 3);	
 	std::cout << "finish." << std::endl;
 	test->printList(head);
 	test->freeList(head);
