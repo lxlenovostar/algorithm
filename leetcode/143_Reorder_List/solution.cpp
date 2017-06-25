@@ -21,8 +21,57 @@
  
 class Solution {
 	public:
-		void reorderList(ListNode* head) {
-        
+		ListNode* reorderList(ListNode* head) {
+			if (head == NULL || head->next == NULL) {
+				return head;
+			}      
+
+			ListNode *fast = head;
+			ListNode *slow = head;
+
+			/*
+			 * get two lists.
+			 * */
+			while (fast->next != NULL && fast->next->next != NULL) {
+				fast = fast->next->next;
+				slow = slow->next;
+			}
+			fast = slow->next;
+			slow->next = NULL;
+
+			/*
+			 * rotate a list.
+			 * dummy is used to build a new list.
+			 * */
+			ListNode dummy(0);
+			while (fast) {
+				ListNode *n = dummy.next;
+				dummy.next = fast;
+				ListNode *nn = fast->next;
+				fast->next = n;
+				fast = nn;
+			}
+
+			slow = head;
+			fast = dummy.next;
+
+			/*
+			 * two list join into one list. 
+			 * */
+			while(slow) {
+				if (fast != NULL) {
+					ListNode *n = slow->next;
+					slow->next = fast;
+					ListNode *nn = fast->next;
+					fast->next = n;
+					fast = nn;
+					slow = n;
+				} else {
+					break;
+				}
+			}
+
+			return head;
     	}
 
 		void printList(ListNode* head) {
@@ -56,9 +105,9 @@ class Solution {
 };
 
 int  main() {
-	ListNode *a1 = new ListNode(5);
+	//ListNode *a1 = new ListNode(5);
 	ListNode *a = new ListNode(4);
-	a->next = a1;
+	//a->next = a1;
 	ListNode *b = new ListNode(3);
 	b->next = a;
 	ListNode *c = new ListNode(2);
@@ -68,7 +117,7 @@ int  main() {
 
 	Solution *test = new Solution();
 	test->printList(d);
-	ListNode *head =  test->rotateRight(d, 2);	
+	ListNode *head =  test->reorderList(d);	
 	std::cout << "finish." << std::endl;
 	test->printList(head);
 	test->freeList(head);
