@@ -11,6 +11,8 @@
  * */
 
 #include <iostream>
+#include <assert.h>
+
 /*
  * Definition for singly-linked list.
  */
@@ -35,23 +37,32 @@ class Solution {
 			ListNode *s_n = &dummy_small_equal; 
 			ListNode *b_n = &dummy_big;
 
+			/*
 			if (head->val <= x) {
 				s_n->next = head;	
 			} else {
 				b_n->next = head;
 			}
-
-			while(head->next != NULL) {
-				head = head->next;	
+			*/
+			while(head != NULL) {
 				if (head->val <= x) {
-					s_n = s_n->next;
+					//if (s_n != NULL)
 					s_n->next = head;
+					assert(s_n != NULL);
+					s_n = s_n->next;
 				} else {
-					b_n = b_n->next;
+					//if (b_n != NULL)
 					b_n->next = head;
+					assert(b_n != NULL);
+					b_n = b_n->next;
 				}
+				
+				head = head->next;	
 			}
 
+			/*
+			 * 这里有BUG
+			 * */
 			head = dummy_small_equal.next;
 			s_n->next = dummy_big.next;
 			
@@ -108,4 +119,3 @@ int  main() {
 
 	return 0;	
 }
-
