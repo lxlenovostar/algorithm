@@ -36,37 +36,26 @@ class Solution {
 			ListNode dummy_big(0);
 			ListNode *s_n = &dummy_small_equal; 
 			ListNode *b_n = &dummy_big;
+		    ListNode* p = head;
 
-			/*
-			if (head->val <= x) {
-				s_n->next = head;	
-			} else {
-				b_n->next = head;
-			}
-			*/
-			while(head != NULL) {
-				if (head->val <= x) {
-					//if (s_n != NULL)
-					s_n->next = head;
+			while(p != NULL) {
+				if (p->val < x) {
+					s_n->next = p;
 					assert(s_n != NULL);
 					s_n = s_n->next;
 				} else {
-					//if (b_n != NULL)
-					b_n->next = head;
+					b_n->next = p; 
 					assert(b_n != NULL);
 					b_n = b_n->next;
 				}
 				
-				head = head->next;	
+				p = p->next;	
 			}
 
-			/*
-			 * 这里有BUG
-			 * */
-			head = dummy_small_equal.next;
 			s_n->next = dummy_big.next;
+			b_n->next = NULL;
 			
-			return head;
+			return dummy_small_equal.next;
     	}
 
 		void printList(ListNode* head) {
@@ -100,19 +89,27 @@ class Solution {
 };
 
 int  main() {
-	ListNode *a1 = new ListNode(1);
+	/*
+	ListNode *a2 = new ListNode(2);
+	ListNode *a1 = new ListNode(5);
+	a1->next = a2;
 	ListNode *a = new ListNode(2);
 	a->next = a1;
 	ListNode *b = new ListNode(3);
 	b->next = a;
 	ListNode *c = new ListNode(4);
 	c->next = b;
-	ListNode *d = new ListNode(5);
+	ListNode *d = new ListNode(1);
 	d->next = c;
+	*/
+
+	ListNode *a2 = new ListNode(1);
+	ListNode *d = new ListNode(1);
+	d->next = a2;
 
 	Solution *test = new Solution();
 	test->printList(d);
-	ListNode *head =  test->partition(d, 3);	
+	ListNode *head =  test->partition(d, 0);	
 	std::cout << "finish." << std::endl;
 	test->printList(head);
 	test->freeList(head);
