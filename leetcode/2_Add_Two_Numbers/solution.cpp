@@ -42,6 +42,7 @@ class Solution {
 			size_t p1_len = 0;
 			size_t p2_len = 0;
 
+			// get len.
 			while(p1) {
 				p1_len++;
 				p1 = p1->next;
@@ -62,10 +63,12 @@ class Solution {
 					p1->val = mid_value%10;	
 					p2->val = mid_value%10;	
 					carry = 1;
+					std::cout << "1 value:" << p1->val << std::endl;	
 				} else {
 					p1->val = mid_value;
 					p2->val = mid_value;
 					carry = 0;
+					std::cout << "2 value:" << p1->val << std::endl;	
 				}
 
 				p1 = p1->next;
@@ -74,40 +77,23 @@ class Solution {
 				min--;
 			}
 
-			/* too complicated too complicated.
-			while (p1) {
-				if (carry) {
-					mid_value = p1->val + 1;				
-					if (mid_value >= 10) {
-						p1->val = mid_value%10;	
-						carry = 1;
-						continue;
+			if (p1_len >= p2_len) {
+				while(p1) {
+					if (carry) {
+						//多余的位置需要处理			 
 					} else {
-						p1->val = mid_value;
-						carry = 0;
+					
 					}
-				} 
-				
-				return l1;
+								
+				}
+
+				return l1; 
+			} else {
+			
+				return l2; 
 			}
 
-			while (p2) {
-				if (carry) {
-					mid_value = p2->val + 1;				
-					if (mid_value >= 10) {
-						p2->val = mid_value%10;	
-						carry = 1;
-						continue;
-					} else {
-						p2->val = mid_value;
-						carry = 0;
-					}
-				} 
-				
-				return l2;
-			}
-			*/
-
+			return NULL;
 		}
 
 		void printList(ListNode* head) {
@@ -141,20 +127,17 @@ class Solution {
 };
 
 int  main() {
-	//ListNode *a2 = new ListNode(4);
-	ListNode *a1 = new ListNode(9);
-	//a1->next = a2;
-	ListNode *a = new ListNode(9);
+	ListNode *a2 = new ListNode(3);
+	ListNode *a1 = new ListNode(4);
+	a1->next = a2;
+	ListNode *a = new ListNode(2);
 	a->next = a1;
 
-	/*
-	ListNode *b = new ListNode(6);
-	ListNode *c = new ListNode(4);
+	ListNode *b = new ListNode(4);
+	ListNode *c = new ListNode(6);
 	c->next = b;
-	*/
-	ListNode *d = new ListNode(1);
-	//d->next = c;
-
+	ListNode *d = new ListNode(5);
+	d->next = c;
 
 	Solution *test = new Solution();
 	test->printList(a);
