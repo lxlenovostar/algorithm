@@ -44,11 +44,11 @@ class Solution {
 			while(p != NULL) {
 				if (p->val < x) {
 					s_n->next = p;
-					assert(s_n != NULL);
+					//assert(s_n != NULL);
 					s_n = s_n->next;
 				} else {
 					b_n->next = p; 
-					assert(b_n != NULL);
+					//assert(b_n != NULL);
 					b_n = b_n->next;
 				}
 				
