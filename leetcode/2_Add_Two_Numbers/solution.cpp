@@ -37,7 +37,9 @@ class Solution {
 				
 			ListNode *p1 = l1;
 			ListNode *p2 = l2;
-			int mid_value = 0;
+			ListNode *end_point_p1;
+			ListNode *end_point_p2;
+			int tmp_value = 0;
 			int carry = 0;
 			size_t p1_len = 0;
 			size_t p2_len = 0;
@@ -58,38 +60,74 @@ class Solution {
 			size_t min = p2_len < p1_len ? p2_len : p1_len;
 			while(min) {
 				std::cout << "sum:" << (p1->val + p2->val) << std::endl;	
-			    mid_value = p1->val + p2->val + carry;	
-				if (mid_value >= 10) {
-					p1->val = mid_value%10;	
-					p2->val = mid_value%10;	
+			    tmp_value = p1->val + p2->val + carry;	
+				if (tmp_value >= 10) {
+					p1->val = tmp_value%10;	
+					p2->val = tmp_value%10;	
 					carry = 1;
 					std::cout << "1 value:" << p1->val << std::endl;	
 				} else {
-					p1->val = mid_value;
-					p2->val = mid_value;
+					p1->val = tmp_value;
+					p2->val = tmp_value;
 					carry = 0;
 					std::cout << "2 value:" << p1->val << std::endl;	
 				}
 
 				p1 = p1->next;
 				p2 = p2->next;
-
 				min--;
 			}
 
 			if (p1_len >= p2_len) {
 				while(p1) {
 					if (carry) {
-						//多余的位置需要处理			 
-					} else {
-					
-					}
-								
+						tmp_value = p1->val + carray;
+						if (tmp_value >= 10) {
+							p1->val = tmp_value%10;
+							carry = 1;
+							std::cout << "3 value:" << p1->val << std::endl;	
+						} else {
+							p1->val = tmp_value;
+							carry = 0;
+							std::cout << "4 value:" << p1->val << std::endl;	
+						}
+					} 
+
+					end_point_p1 = p1;
+					p1 = p1->next;
+				}
+
+				if (carry) {
+					ListNode *new_node = new ListNode(1);
+					end_point_p1->next = new_node;
 				}
 
 				return l1; 
 			} else {
-			
+				while(p2) {
+					if (carry) {
+						tmp_value = p2->val + carray;
+						if (tmp_value >= 10) {
+							p2->val = tmp_value%10;
+							carry = 1;
+							std::cout << "5 value:" << p2->val << std::endl;	
+						} else {
+							p2->val = tmp_value;
+							carry = 0;
+							std::cout << "6 value:" << p2->val << std::endl;	
+						}
+					} 
+
+					end_point_point = p2;
+					p2 = p2->next;
+				}
+
+				if (carry) {
+					ListNode *new_node = new ListNode(1);
+					end_point_p2->next = new_node;
+				}
+
+
 				return l2; 
 			}
 
