@@ -73,6 +73,8 @@ class Solution {
 					std::cout << "2 value:" << p1->val << std::endl;	
 				}
 
+				end_point_p1 = p1;
+				end_point_p2 = p2;
 				p1 = p1->next;
 				p2 = p2->next;
 				min--;
@@ -81,7 +83,7 @@ class Solution {
 			if (p1_len >= p2_len) {
 				while(p1) {
 					if (carry) {
-						tmp_value = p1->val + carray;
+						tmp_value = p1->val + carry;
 						if (tmp_value >= 10) {
 							p1->val = tmp_value%10;
 							carry = 1;
@@ -106,7 +108,7 @@ class Solution {
 			} else {
 				while(p2) {
 					if (carry) {
-						tmp_value = p2->val + carray;
+						tmp_value = p2->val + carry;
 						if (tmp_value >= 10) {
 							p2->val = tmp_value%10;
 							carry = 1;
@@ -118,7 +120,7 @@ class Solution {
 						}
 					} 
 
-					end_point_point = p2;
+					end_point_p2 = p2;
 					p2 = p2->next;
 				}
 
@@ -171,7 +173,7 @@ int  main() {
 	ListNode *a = new ListNode(2);
 	a->next = a1;
 
-	ListNode *b = new ListNode(4);
+	ListNode *b = new ListNode(7);
 	ListNode *c = new ListNode(6);
 	c->next = b;
 	ListNode *d = new ListNode(5);
@@ -179,7 +181,8 @@ int  main() {
 
 	Solution *test = new Solution();
 	test->printList(a);
-	ListNode *head =  test->addTwoNumbers(d, a);	
+	test->printList(d);
+	ListNode *head = test->addTwoNumbers(d, a);	
 	std::cout << "finish." << std::endl;
 	test->printList(head);
 	test->freeList(head);
