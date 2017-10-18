@@ -4,8 +4,6 @@
  * A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
  * Return a deep copy of the list.
  *
- * TODO:
- * 题目还没有看明白,什么是深度拷贝
  * */
 
 #include <iostream>
@@ -20,7 +18,6 @@ struct RandomListNode {
     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
 };
 
-
 class Solution {
 	public:
 		RandomListNode *copyRandomList(RandomListNode *head) {
@@ -28,81 +25,75 @@ class Solution {
 				return NULL;
 			}
 
-			RandomListNode dummy(0);
-			RandomListNode *n = &dummy;
 			RandomListNode *h = head;
-			map<RandomListNode*, RandomListNode*> m;
+			RandomListNode *node;
+			RandomListNode *temp;
+			RandomListNode dummy(0);
 
 			while(h) {
-				RandomListNode *node = new RandomListNode(h->label);
-				n->next = node;
-				n = node;
-
-				node->random = h->random;
-				// TODO 这一行用来做什么
-				m[h] = node;
-
-				h = h->next;
+				node = new RandomListNode(h->label);
+				temp = h->next;
+				h->next = node;
+				node->next = temp;
+				h = temp;
 			}
 
-			h = dummy.next;
+			h = head->next;
 			while(h) {
 				if (h->random != NULL) {
-					h->random = m[h->random];
+					h->random = h->random->next;				
 				}
-				h = h->next;
+				if (h->next)
+					h = h->next->next;
+				else 
+					break;
 			}
 
-			return dummy.next;
+			//TODO 拆分链表
+
+			return head;
 		}
 
-		void printList(ListNode* head) {
+		void printList(RandomListNode* head) {
 			if(head == NULL) {
 				return ;
 			} 
 
-			std::cout << head->val << std::endl;	
+			std::cout << head->label << std::endl;	
 			while(head->next != NULL) {
 				head = head->next;
-				std::cout << head->val << std::endl;	
+				std::cout << head->label << std::endl;	
 			}
 		}
 	
-		void freeList(ListNode* head) {
+		void freeList(RandomListNode* head) {
 			if(head == NULL) {
 				return ;
 			} 
 
-			ListNode* next_head = head->next;
-			delete head;
-
-			while(next_head != NULL) {
-				ListNode* tmp = next_head->next;
-				delete next_head;
-				next_head = tmp;	
+			RandomListNode* tmp = head->next;
+			while(head != NULL) {
+				tmp = head->next;
+				delete head;
+				head = tmp;	
 			}
 		}
-
 
 };
 
 int  main() {
-	ListNode *a2 = new ListNode(3);
-	ListNode *a1 = new ListNode(4);
+	RandomListNode *a3 = new RandomListNode(4);
+	RandomListNode *a2 = new RandomListNode(3);
+	a2->next = a3;
+	RandomListNode *a1 = new RandomListNode(2);
 	a1->next = a2;
-	ListNode *a = new ListNode(2);
+	RandomListNode *a = new RandomListNode(1);
 	a->next = a1;
-
-	ListNode *b = new ListNode(7);
-	ListNode *c = new ListNode(6);
-	c->next = b;
-	ListNode *d = new ListNode(5);
-	d->next = c;
+	a->random = a3;
 
 	Solution *test = new Solution();
 	test->printList(a);
-	test->printList(d);
-	ListNode *head = test->addTwoNumbers(d, a);	
+	RandomListNode *head = test->copyRandomList(a);	
 	std::cout << "finish." << std::endl;
 	test->printList(head);
 	test->freeList(head);
