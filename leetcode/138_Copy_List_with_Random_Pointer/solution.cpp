@@ -32,12 +32,21 @@ class Solution {
 
 			while(h) {
 				node = new RandomListNode(h->label);
+				node->random = h->random;
 				temp = h->next;
 				h->next = node;
 				node->next = temp;
 				h = temp;
 			}
 
+			std::cout << "step 0" << std::endl;
+			h = head;
+			while(h != NULL) {
+				std::cout << h->label << std::endl;	
+				h = h->next;
+			}
+
+			std::cout << "step 1" << std::endl;
 			h = head->next;
 			while(h) {
 				if (h->random != NULL) {
@@ -49,9 +58,20 @@ class Solution {
 					break;
 			}
 
-			//TODO 拆分链表
+			std::cout << "step 2" << std::endl;
+			h = head;
+			node = &dummy;
+			while(h) {
+				node->next = h->next;
+				temp = h->next->next;
+				h->next = temp;
+				h = h->next;
+				node = node->next;
+			}
+			
+			std::cout << "step 3" << std::endl;
 
-			return head;
+			return dummy.next;
 		}
 
 		void printList(RandomListNode* head) {
@@ -82,14 +102,15 @@ class Solution {
 };
 
 int  main() {
-	RandomListNode *a3 = new RandomListNode(4);
+	/*RandomListNode *a3 = new RandomListNode(4);
 	RandomListNode *a2 = new RandomListNode(3);
 	a2->next = a3;
-	RandomListNode *a1 = new RandomListNode(2);
-	a1->next = a2;
-	RandomListNode *a = new RandomListNode(1);
+	*/
+	RandomListNode *a1 = new RandomListNode(-1);
+	//a1->next = a2;
+	RandomListNode *a = new RandomListNode(-1);
 	a->next = a1;
-	a->random = a3;
+	//a->random = a3;
 
 	Solution *test = new Solution();
 	test->printList(a);
