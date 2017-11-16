@@ -11,32 +11,53 @@
 
 /**
  * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
  */
+ struct TreeNode {
+     int val;
+     TreeNode *left;
+     TreeNode *right;
+     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ };
  
 class Solution {
 	public:
 		bool checksum(TreeNode *node, int num) 
 		{
-			if (node == NULL && num == 0)
+			bool result_left = false;
+			bool result_right = false;
+			
+			if (node->val == num && (node->left == NULL || node->right == NULL))
 				return true;
 
+			std::cout << "sum1:" <<  num << std::endl;
 
+			if (node->left != NULL)	
+				result_left = checksum(node->left, num - node->val);
+			
+			if (node->right != NULL)	
+				result_right = checksum(node->right, num - node->val);
+
+			return (result_left || result_right);
+				
 		}
 
 		bool hasPathSum(TreeNode* root, int sum) {
-			bool result_left;
-			bool result_right;
+			bool result_left = false;
+			bool result_right = false;
+
 			if (root == NULL)
 				return false;
 
-			if (root->val == sum && (root->left == NULL || root->right == NULL))
+			if (root->val == sum && root->left == NULL && root->right == NULL)
 				return true;
+
+			if (root->val >= sum)
+				return false;
+
+			//if (root->val == sum && (root->left == NULL || root->right == NULL))
+			//	return true;
+
+			std::cout << "sum1:" <<  sum << std::endl;
 
 			if (root->left != NULL)
 				result_left = checksum(root->left, sum - root->val);
@@ -44,16 +65,13 @@ class Solution {
 			if (root->right != NULL)
 				result_right = checksum(root->right, sum - root->val);
 
-			if (result_left || result_right)
-				return true;
-			else 
-				return false;
+			return (result_left || result_right);
 		}
-
 
 };
 
 int  main() {
+	/*
 	TreeNode *a5 = new TreeNode(5);
 	TreeNode *a4 = new TreeNode(4);
 	TreeNode *a8 = new TreeNode(8);
@@ -72,9 +90,14 @@ int  main() {
 	a11->left = a7;
 	a11->right = a2;
 	a42->right = a1;
+	*/
+	TreeNode *a1 = new TreeNode(1);
+	TreeNode *a2 = new TreeNode(2);
+
+	a1->left = a2;
 
 	Solution *test = new Solution();
-	bool result = test->hasPathSum(a5, 22);	
+	bool result = test->hasPathSum(a1, 1);	
 	std::cout << "result:" <<  result << std::endl;
 
 	return 0;	
