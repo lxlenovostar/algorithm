@@ -7,7 +7,10 @@
  * */
 
 #include <iostream>
+#include <vector>
 #include <assert.h>
+
+using namespace std;
 
 /**
  * Definition for a binary tree node.
@@ -21,7 +24,32 @@
  
 class Solution {
 	public:
+		void DFS(TreeNode *root, vector<int> &result) 
+		{
+			if (root == NULL)
+				return ;
+
+			result.push_back(root->val);
+			
+			if (root->left == NULL && root->right == NULL)
+			{
+				return ;
+			}
+
+			DFS(root->left, result);
+			DFS(root->right, result);
+			return ;
+		}
+	
 		vector<int> preorderTraversal(TreeNode* root) {
+			vector<int> result;
+			if (root == NULL) {
+				return result; 
+			}
+
+			DFS(root, result);
+
+			return result;
 		}
 
 };
@@ -49,12 +77,16 @@ int  main() {
 	*/
 	TreeNode *a1 = new TreeNode(1);
 	TreeNode *a2 = new TreeNode(2);
+	TreeNode *a3 = new TreeNode(3);
 
-	a1->left = a2;
+	a1->right = a2;
+	a2->left = a3;
 
 	Solution *test = new Solution();
-	bool result = test->hasPathSum(a1, 1);	
-	std::cout << "result:" <<  result << std::endl;
+	vector<int> result = test->preorderTraversal(a1);	
+	vector<int>::iterator iter;
+	for (iter = result.begin(); iter != result.end(); iter++ )
+		std::cout << "result:" <<  *iter << std::endl;
 
 	return 0;	
 }
