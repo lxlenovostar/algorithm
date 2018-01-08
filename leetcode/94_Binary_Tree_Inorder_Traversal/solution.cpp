@@ -1,8 +1,9 @@
 /* 
- * 94. Binary Tree Inorder Traversal 
+ * 144. Binary Tree Preorder Traversal 
  *
- * Given a binary tree, return the inorder traversal of its nodes' values. 
- *
+ * Given a binary tree and a sum, determine if the tree has 
+ * a root-to-leaf path such that adding up all the values along 
+ * the path equals the given sum.
  * */
 
 #include <iostream>
@@ -23,20 +24,32 @@ using namespace std;
  
 class Solution {
 	public:
+		void DFS(TreeNode *root, vector<int> &result) 
+		{
+			if (root == NULL)
+				return ;
+			
+			if (root->left != NULL)
+			{
+				DFS(root->left, result);
+			}
+
+			result.push_back(root->val);
+
+			DFS(root->right, result);
+
+			return ;
+		}
+	
 		vector<int> inorderTraversal(TreeNode* root) {
 			vector<int> result;
-
-			if (root == NULL)
-				return NULL;
-
-			TreeNode *pos = root;
-			vector<TreeNode*> tmp_stack;
-
-			while (pos != NULL) {
-				tmp_stack.push_back(pos);		
-
-
+			if (root == NULL) {
+				return result; 
 			}
+
+			DFS(root, result);
+
+			return result;
 		}
 
 };
@@ -70,7 +83,7 @@ int  main() {
 	a2->left = a3;
 
 	Solution *test = new Solution();
-	vector<int> result = test->preorderTraversal(a1);	
+	vector<int> result = test->inorderTraversal(a1);	
 	vector<int>::iterator iter;
 	for (iter = result.begin(); iter != result.end(); iter++ )
 		std::cout << "result:" <<  *iter << std::endl;
