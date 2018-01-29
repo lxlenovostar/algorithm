@@ -33,8 +33,20 @@ class Solution {
 			vector<TreeNode*> tmp_stack;
 
 			while (pos != NULL) {
-				tmp_stack.push_back(pos);		
+				//tmp_stack.push_back(pos);		
+				if (pos->right != NULL) 
+					tmp_stack.puah_back(pos->right);
+			
+				tmp_stack.push_back(pos);	
 
+				if (pos->left == NULL) {
+					result.push_back(pos->val); 
+					tmp_stack.pop();
+					pop = 上面的值.
+				}
+				else { 
+					pos = pos->left;
+				}
 
 			}
 		}
