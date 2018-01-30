@@ -27,28 +27,35 @@ class Solution {
 			vector<int> result;
 
 			if (root == NULL)
-				return NULL;
+				return result;
 
 			TreeNode *pos = root;
 			vector<TreeNode*> tmp_stack;
 
 			while (pos != NULL) {
-				//tmp_stack.push_back(pos);		
-				if (pos->right != NULL) 
-					tmp_stack.puah_back(pos->right);
+				std::cout << "what -1:" << pos->val << std::endl;
+
+				if (pos->right != NULL) { 
+					std::cout << "what 0\n";
+					tmp_stack.push_back(pos->right);
+				}
 			
 				tmp_stack.push_back(pos);	
 
 				if (pos->left == NULL) {
+					std::cout << "what 1:" << pos->val << std::endl;
 					result.push_back(pos->val); 
-					tmp_stack.pop();
-					pop = 上面的值.
+					tmp_stack.pop_back();
+					pos = tmp_stack[tmp_stack.size()-1]; 
 				}
 				else { 
+					std::cout << "what 2\n";
 					pos = pos->left;
 				}
 
 			}
+
+			return result;
 		}
 
 };
@@ -82,7 +89,7 @@ int  main() {
 	a2->left = a3;
 
 	Solution *test = new Solution();
-	vector<int> result = test->preorderTraversal(a1);	
+	vector<int> result = test->inorderTraversal(a1);	
 	vector<int>::iterator iter;
 	for (iter = result.begin(); iter != result.end(); iter++ )
 		std::cout << "result:" <<  *iter << std::endl;
