@@ -24,61 +24,34 @@ using namespace std;
 class Solution {
 	public:
 		vector<int> inorderTraversal(TreeNode* root) {
-			vector<int> result;
-
-			if (root == NULL)
-				return result;
-
-			TreeNode *pos = root;
-			vector<TreeNode*> tmp_stack;
-			tmp_stack.push_back(pos);
-
-			while (pos != NULL) {
-				std::cout << "begin 0:" << pos->val << std::endl;
-
-				if (pos->right != NULL) {
-					std::cout << "what 2.0:" << pos->right->val << std::endl;
-					tmp_stack.push_back(pos->right);
-				} 
-					
-				if (pos->left == NULL) {
-					std::cout << "what 2:" << pos->val << std::endl;
-					result.push_back(pos->val); 
-					tmp_stack.pop_back();
-					pos = tmp_stack[tmp_stack.size() - 1]; 
-					std::cout << "what 2.1:" << pos->val << std::endl;
-				}
-				else { 
-					std::cout << "what 3\n";
-					pos = pos->left;
-				}
-			
-				/*
-				// 右子树入栈
-				if (pos->right != NULL) { 
-					std::cout << "right tree in stack\n";
-					tmp_stack.push_back(pos->right);
-				}
-			
-				// 父节点入栈
-				tmp_stack.push_back(pos);	
-
-				if (pos->left == NULL) {
-					std::cout << "what 2:" << pos->val << std::endl;
-					result.push_back(pos->val); 
-					tmp_stack.pop_back();
-					pos = tmp_stack[tmp_stack.size()-1]; 
-					std::cout << "what 2.1:" << pos->val << std::endl;
-				}
-				else { 
-					std::cout << "what 3\n";
-					pos = pos->left;
-				}
-				*/
-
+			vector<int> vals;
+		
+			if (root == NULL) {
+				return vals;
 			}
 
-			return result;
+			vector<TreeNode*> nodes;
+			TreeNode* p = root;
+
+			while (p || !nodes.empty()) {
+				// 这里一直遍历左子树，将根节点压栈
+				while(p) {
+					nodes.push_back(p);
+					p = p->left;
+				}
+
+				if (!nodes.empty()) {
+					p = nodes.back();
+					vals.push_back(p->val);
+
+					// 将根节点弹出，获取右子树
+					nodes.pop_back();
+					p = p->right;
+				}
+			
+			}
+
+			return vals;
 		}
 
 };
