@@ -1,7 +1,10 @@
 /* 
- * 94. Binary Tree Inorder Traversal 
+ * 145 Given a binary tree, return the postorder traversal of its nodes' values.
  *
- * Given a binary tree, return the inorder traversal of its nodes' values. 
+ * For example:
+ * Given binary tree [1,null,2,3],
+ *
+ * return [3,2,1].
  *
  * */
 
@@ -23,7 +26,7 @@ using namespace std;
  
 class Solution {
 	public:
-		vector<int> inorderTraversal(TreeNode* root) {
+		vector<int> postorderTraversal(TreeNode* root) {
 			vector<int> vals;
 		
 			if (root == NULL) {
@@ -32,21 +35,30 @@ class Solution {
 
 			vector<TreeNode*> nodes;
 			TreeNode* p = root;
-
+			
 			while (p || !nodes.empty()) {
 				// 这里一直遍历左子树，将根节点压栈
 				while(p) {
 					nodes.push_back(p);
 					p = p->left;
 				}
+	
+				// 这里一直遍历右子树，将根节点压栈
+				if (!nodes.empty()) {
+					p = nodes.back();
 
+					while (p) {
+						p = p->right;
+						nodes.push_back(p);
+					}
+				}
+				
 				if (!nodes.empty()) {
 					p = nodes.back();
 					vals.push_back(p->val);
-
-					// 将根节点弹出，获取右子树
 					nodes.pop_back();
-					p = p->right;
+
+					// TODO 这里怎么写？
 				}
 			
 			}
@@ -85,7 +97,7 @@ int  main() {
 	a2->left = a3;
 
 	Solution *test = new Solution();
-	vector<int> result = test->inorderTraversal(a1);	
+	vector<int> result = test->postorderTraversal(a1);	
 	vector<int>::iterator iter;
 	for (iter = result.begin(); iter != result.end(); iter++ )
 		std::cout << "result:" <<  *iter << std::endl;
