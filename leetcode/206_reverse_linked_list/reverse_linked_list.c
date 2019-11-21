@@ -17,7 +17,7 @@ struct ListNode {
 struct ListNode* reverseList(struct ListNode* head) {
 	struct ListNode *stack = NULL;
 
-	while(head->next != NULL) {
+	while(head != NULL) {
 		printf("reverseList:%d\n", head->val);
 		struct ListNode *next = head->next;
 
@@ -47,7 +47,7 @@ void print_list(struct ListNode *head) {
 
 void free_list(struct ListNode *head) {
 	struct ListNode *tmp = head;
-	printf("free begin\n");
+	printf("free begin, head:%p\n", head);
 	while(head != NULL) {
 		printf("%d\n", head->val);
 		tmp = head;
@@ -80,8 +80,9 @@ int main()
 	a5->next = NULL;
 
 	print_list(a1);
-	print_list(reverseList(a1));
-	free_list(a1);
+	struct ListNode *result = reverseList(a1);
+	print_list(result);
+	free_list(result);
 
 	return 0;
 }
