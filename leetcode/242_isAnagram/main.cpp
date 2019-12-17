@@ -1,11 +1,20 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
 class Solution {
 public:
+    bool isAnagram2(string s, string t) {
+		std::sort(s.begin(), s.end());
+		
+		std::sort(t.begin(), t.end());
+
+		return s == t;
+	}
+
     bool isAnagram(string s, string t) {
 
 		if (s.compare(t) == 0)
@@ -51,5 +60,9 @@ int main() {
 	std::cout << ret->isAnagram("ab", "ba") << std::endl;
 	std::cout << ret->isAnagram("", "") << std::endl;
 
+	std::cout << ret->isAnagram2("abc", "abc") << std::endl;
+	std::cout << ret->isAnagram2("a", "b") << std::endl;
+	std::cout << ret->isAnagram2("ab", "ba") << std::endl;
+	std::cout << ret->isAnagram2("", "") << std::endl;
 	return 0;
 }
