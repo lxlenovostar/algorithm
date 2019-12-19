@@ -25,11 +25,22 @@ public:
 		vector<vector<int>> ret;
 		set<vector<int>> set_ret;
 
+		if (nums.empty())
+			return ret;
+
 		std::sort(nums.begin(), nums.end());
 
 		vector<int>::iterator pos = nums.begin();
+		int old = *pos;
 
 		for (; pos != nums.end(); pos++) {
+			if (pos != nums.begin()) {
+                if (*pos == old) {
+                    old = *pos;
+                    continue;
+                }
+            }
+
 			vector<int>::iterator first = pos + 1;
 			vector<int>::iterator end = nums.end() - 1;
 			
@@ -67,18 +78,21 @@ int main() {
 	//vector<int> nums = {-2, -9, 11, 15};
 	//vector<int> nums = {2, 11};
 	//vector<int> nums = {-1, 0, 1, 2, -1, -4};
-	vector<int> nums = {14,4,6,-1,10,9,-8,7,-13,14,-13,-11,-8,-9,11,14,-8,-14,-13,7,-10,-15,-13,-11,-11,11,14,13,2,-14,1,-7,-2,14,-1,-15,9,7,-1,3,6,1,7,5,-1,-5,4,-2,-4,-1,-9,-7,-1,-7,-11,3,12,10,-7,-1,12,1,8,-13,1,14,9,-13,6,-7,-3,-11,2,-11,10,-14,-1,-9,0,2,5,6,3,-11,6,7,0,3,3,0,-12,-8,-13,3,-14,-5,2,10,-11,-14,-12,1,-10,5,5,7,-1,11,14,6,-10,-4,-3,8,-7,10,1,8,-1,-11,-15,-6,-12,-13,12,-11};
+	//vector<int> nums = {14,4,6,-1,10,9,-8,7,-13,14,-13,-11,-8,-9,11,14,-8,-14,-13,7,-10,-15,-13,-11,-11,11,14,13,2,-14,1,-7,-2,14,-1,-15,9,7,-1,3,6,1,7,5,-1,-5,4,-2,-4,-1,-9,-7,-1,-7,-11,3,12,10,-7,-1,12,1,8,-13,1,14,9,-13,6,-7,-3,-11,2,-11,10,-14,-1,-9,0,2,5,6,3,-11,6,7,0,3,3,0,-12,-8,-13,3,-14,-5,2,10,-11,-14,-12,1,-10,5,5,7,-1,11,14,6,-10,-4,-3,8,-7,10,1,8,-1,-11,-15,-6,-12,-13,12,-11};
+	//vector<int> nums = {0, 0, 0};
+	vector<int> nums;
 
 	Solution *obj = new Solution();
 	vector<vector<int>> ret =  obj->threeSum(nums);
 
-	for (vector<vector<int>>::iterator pos = ret.begin(); pos != ret.end(); pos++) {
-		for (vector<int>::iterator ppos = (*pos).begin(); ppos != (*pos).end(); ppos++)
-			std::cout << *ppos << std::endl; 
+	if (!ret.empty()) {
+		for (vector<vector<int>>::iterator pos = ret.begin(); pos != ret.end(); pos++) {
+			for (vector<int>::iterator ppos = (*pos).begin(); ppos != (*pos).end(); ppos++)
+				std::cout << *ppos << std::endl; 
 
-		std::cout << std::endl; 
+			std::cout << std::endl; 
+		}
 	}
-
 
 	return 0;
 }
