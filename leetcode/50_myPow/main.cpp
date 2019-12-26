@@ -21,6 +21,7 @@ n 是 32 位有符号整数，其数值范围是 [−231, 231 − 1] 。
 */
 
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -44,21 +45,52 @@ public:
 		return ret;
     }
 
+ 	double myPow1(double x, int n) {
+		double result = 0.0f;
+		if (n > 0) {
+			result = helper(x, n);	
+		} else if (n < 0) {
+			result = 1/helper(x, abs(n));
+		} else {
+			return 1;
+		}
+			
+		return result;
+	}
 
-	//TODO need log2N
+ 	double helper(double x, int n) {
+		if (n == 1)
+			return x;
+		
+		if (n % 2 == 0) {
+			double tmp = helper(x, n/2);
+			ret = tmp*tmp;
+		} else {
+			double tmp = helper(x, n/2);
+			ret = x*tmp*tmp;
+		}
+
+		return ret;
+    }
+
+
 };
 
 int main() {
 	Solution *obj = new Solution();
 	
-	//double x = 2.10000;
-	//int y = 3;
+	/*
+	double x = 2.10000;
+	int y = 3;
+	*/
 
-	//double x = 2.00000;
-	//int y = -2;
-	double x = 0.00001;
-	int y = 2147483647;
-	std::cout << "ret:" << obj->myPow(x, y) << std::endl; 
+	double x = 2.00000;
+	int y = -2;
+	//double x = 0.00001;
+	//double x = 2;
+	//int y = 2147;
+	//int y = 2147483647;
+	std::cout << "ret:" << obj->myPow1(x, y) << std::endl; 
 
 	return 0;
 }
