@@ -50,7 +50,12 @@ public:
 		if (n > 0) {
 			result = helper(x, n);	
 		} else if (n < 0) {
-			result = 1/helper(x, abs(n));
+			if (n == INT_MIN) {
+                n++;
+			    result = 1.0f/(helper(x, abs(n))*x);
+            }
+            else
+                result = 1.0f/(helper(x, abs(n)));
 		} else {
 			return 1;
 		}
@@ -59,6 +64,9 @@ public:
 	}
 
  	double helper(double x, int n) {
+		if (n == 0)
+			return 1;
+
 		if (n == 1)
 			return x;
 		
@@ -84,12 +92,14 @@ int main() {
 	int y = 3;
 	*/
 
-	double x = 2.00000;
-	int y = -2;
+	//double x = 2.00000;
+	//int y = -2;
 	//double x = 0.00001;
 	//double x = 2;
 	//int y = 2147;
 	//int y = 2147483647;
+	double x = 1.00000;
+	int y = -2147483648;
 	std::cout << "ret:" << obj->myPow1(x, y) << std::endl; 
 
 	return 0;
