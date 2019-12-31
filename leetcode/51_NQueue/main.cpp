@@ -32,7 +32,7 @@ public:
 
 	void  helper(int n, vector<Point> points, set<int> vals_a, set<int> vals_b, set<int> vals_c) {
 		if (n == 0) {
-			std::cout << "what1" << std::endl;
+			std::cout << "what0" << std::endl;
 			result.push_back(points);	
 		}
 
@@ -41,37 +41,48 @@ public:
 			int y = i;
 
 			int A = x + y;
-			int B = abs(x-y);
+			//int B = abs(x-y);
+			int B = y-x;
 			int C = i; 
+			int D = x;
 
-			if (vals_a.find(A) != vals_a.end()) {
+			set<int>      new_vals_a(vals_a);
+			set<int>      new_vals_b(vals_b);
+			set<int>      new_vals_c(vals_c);
+			vector<Point> new_points(points);
+
+			std::cout << "n: " << n << " i: " << i << std::endl;
+			std::cout << "A: " << A << " B: " << B << " C: " << C  << " D: " << D << std::endl;
+
+			if (new_vals_a.find(A) != new_vals_a.end()) {
+				std::cout << "what1" << std::endl;
+				continue;
+			} else {
+				//TODO
+				new_vals_a.insert(A);
+			}
+				
+			if (new_vals_b.find(B) != new_vals_b.end()) {
 				std::cout << "what2" << std::endl;
 				continue;
 			} else {
 				//TODO
-				vals_a.insert(A);
+				new_vals_b.insert(B);
 			}
 				
-			if (vals_b.find(B) != vals_b.end()) {
+			if (new_vals_c.find(C) != new_vals_c.end()) {
 				std::cout << "what3" << std::endl;
 				continue;
 			} else {
 				//TODO
-				vals_b.insert(B);
-			}
-				
-			if (vals_c.find(C) != vals_c.end()) {
-				std::cout << "what4" << std::endl;
-				continue;
-			} else {
-				//TODO
-				vals_c.insert(C);
+				new_vals_c.insert(C);
 			}
 				
 			struct Point p_t = {x, y};
-			points.push_back(p_t);
+			std::cout << "insert x: " << x << " y: " << y << std::endl;
+			new_points.push_back(p_t);
 
-			helper(n-1, points, vals_a, vals_b, vals_c);
+			helper(n-1, new_points, new_vals_a, new_vals_b, new_vals_c);
 			
 		}
 
@@ -88,11 +99,29 @@ public:
 		N = n;
 		helper(n, point_vector, val_set_a, val_set_b, val_set_c);
 
+		string str(n, '.');
+		vector<string> vec_str;
+		for (int i = 0; i < n; ++i)
+			vec_str.push_back(str);
+
 		for (size_t i = 0; i < result.size(); i++) {
-			for (size_t j = 0; j < result[i].size(); j++)
+			vector<string> vec_tmp(vec_str);
+
+			for (size_t j = 0; j < result[i].size(); j++)  {
+				int x = result[i][j].x;
+				int y = result[i][j].y;
 				std::cout << "x: " << result[i][j].x << " y: " << result[i][j].y << std::endl;
+
+				vec_tmp[x][y] = 'Q';
+				
+			}
+
+			ret.push_back(vec_tmp);
+
 			std::cout << std::endl;
 		}	
+
+	
 
 		return ret;	
 		
@@ -102,14 +131,13 @@ public:
 int main() {
 	Solution *obj = new Solution();
 
-	vector<vector<string>> ret = obj->solveNQueens(4);
-	/*
+	//vector<vector<string>> ret = obj->solveNQueens(4);
+	vector<vector<string>> ret = obj->solveNQueens(8);
 	for (size_t i = 0; i < ret.size(); i++) {
 		for (size_t j = 0; j < ret[i].size(); j++)
 			std::cout << ret[i][j] << std::endl;
 		std::cout << std::endl;
 	}	
-	*/
 
 	return 0;
 }
