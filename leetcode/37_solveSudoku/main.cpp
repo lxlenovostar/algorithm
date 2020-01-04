@@ -25,8 +25,6 @@ using namespace std;
 
 class Solution {
 public:
-	vector<vector<char>> result;
-
 	bool check_row(vector<vector<char>>& board, int i, char val) {
 
 		for (int j = 0; j < 9; j++) {
@@ -73,15 +71,12 @@ public:
 		return true;
 	}
 
-	bool helper(vector<vector<char>> board, int i, int j) {
+	bool helper(vector<vector<char>> &board, int i, int j) {
 		if (i >= 9) {
-			result = board;
-			std::cout << "what3" << std::endl;
 			return true;
 		} // if
 		
 		if (board[i][j] == '.') {
-			std::cout << "what1" << std::endl;
 			for (char val = '1' ; val <= '9'; val++)  {
 				//check row 
 				bool ret = check_row(board, i, val);
@@ -99,17 +94,21 @@ public:
 					continue;
 
 
+				/*
 				vector<vector<char>> new_board(board);
 				new_board[i][j] = val;
-
 				bool r = helper(new_board, i, j);
+				*/
+				board[i][j] = val;
+				bool r = helper(board, i, j);
 				if (r == true)
 					return true;
+				else 
+					board[i][j] = '.';
+
 			} //for
 		
 		} else {
-			std::cout << "what2" << std::endl;
-
 			if ((j+1) >= 9) 
 				return helper(board, i+1, 0);
 			else 
@@ -123,7 +122,6 @@ public:
 
     void solveSudoku(vector<vector<char>>& board) {
 		helper(board, 0, 0);
-		board = result;
     }
 };
 
