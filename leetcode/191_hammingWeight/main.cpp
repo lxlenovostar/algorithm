@@ -67,6 +67,8 @@ public:
 
 int main() {
 	uint32_t n  = 11;
+	//uint32_t n  = 0000000000000000000000000001011;
+	//int n  = 011;
 	
 	printf("n: %u\n", n);
 	std::cout << "n: " << n << std::endl;
