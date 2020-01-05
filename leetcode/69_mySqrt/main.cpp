@@ -24,35 +24,31 @@ using namespace std;
 class Solution {
 public:
     int mySqrt(int x) {
-		if (x <= 0)
+		if (x <= 1)
 			return x;
 
-		int lo = 1; 
-		int hi = x;
-		//int mid = lo + (hi - lo)/2;
-		int mid = (hi + lo)/2;
+		long lo = 1;
+		long hi = x;
+		long mid = (hi + lo)/2;
+		int res = 0;
 
 		while (lo <= hi) {
 			mid = (hi + lo)/2;
 			std::cout << "lo: " << lo << " hi: " << hi << " mid: " << mid << std::endl;
-			//mid = lo + (hi - lo)/2;
-			int val = mid*mid;
-			if (val == x) {
+			if (mid == x/mid) {
 				return mid;
-			} else if (val > x) {
+			} else if (mid > x/mid) {
 				hi = mid - 1;
-				//mid = (hi + lo)/2;
 				std::cout << " 1 lo: " << lo << " hi: " << hi << " mid: " << mid << std::endl;
 			} else {
+				res = mid;
 				lo = mid + 1;
-				//mid = (hi + lo)/2;
-				//mid = lo + (hi - lo)/2;
 				std::cout << " 2 lo: " << lo << " hi: " << hi << " mid: " << mid << std::endl;
 			}
 		
 		}
 
-		return mid;
+		return res;
     }
 };
 
@@ -60,6 +56,6 @@ int main() {
 	Solution *obj = new Solution();
 	//std::cout << obj->mySqrt(4) << std::endl;
 	std::cout << obj->mySqrt(8) << std::endl;
-	//std::cout << obj->mySqrt(3) << std::endl;
+	std::cout << obj->mySqrt(3) << std::endl;
 	return 0;
 }
