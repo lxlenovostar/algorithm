@@ -25,6 +25,7 @@ words = ["oath","pea","eat","rain"] and board =
 */
 
 #include <map>
+#include <set>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -117,73 +118,64 @@ public:
 class Solution {
 public:
 	vector<string> result;
+	set<string> result_check;
 	int N;
 	int M;
 
-	bool checker(vector<vector<char>>& board, int begin_i, int begin_j, Trie* t_obj, string str, vector<vector<int>> key) {
+	void checker(vector<vector<char>>& board, int begin_i, int begin_j, Trie* t_obj, string str, vector<vector<int>> &key) {
 		string new_str = str + board[begin_i][begin_j];
 
 		if (t_obj->search(new_str) == true) {
 			std::cout << "what1 new_str: " << new_str << std::endl;
-			result.push_back(new_str);
-			return true;
+			if (result_check.find(new_str) == result_check.end()) {
+				result.push_back(new_str);
+				result_check.insert(new_str);
+			}
+			//return ;
 		}
 		
 		if (t_obj->startsWith(new_str) == false) {
 			std::cout << "what2 new_str: " << new_str << std::endl;
-			return false;
+			return ;
 		} else {
 			key[begin_i][begin_j] = 1;
 			
 			std::cout << "what2.1 new_str: " << new_str << std::endl;
 
 			if (begin_i+1 < N && key[begin_i+1][begin_j] != 1) { 
-				bool ret = checker(board, begin_i+1, begin_j, t_obj, new_str, key);	
-				std::cout << "what3" << std::endl;
-				if (ret == true)
-					return true;
+				checker(board, begin_i+1, begin_j, t_obj, new_str, key);	
 			}
 
 			if (begin_i-1 >= 0 && key[begin_i-1][begin_j] != 1)  {
-				bool ret = checker(board, begin_i-1, begin_j, t_obj, new_str, key);	
-				std::cout << "what4" << std::endl;
-				if (ret == true)
-					return true;
+				checker(board, begin_i-1, begin_j, t_obj, new_str, key);	
 			}
 
 			if (begin_j+1 < M && key[begin_i][begin_j+1] != 1) { 
-				bool ret = checker(board, begin_i, begin_j+1, t_obj, new_str, key);	
-				std::cout << "what5" << std::endl;
-				if (ret == true)
-					return true;
+				checker(board, begin_i, begin_j+1, t_obj, new_str, key);	
 			}
 			
 			std::cout << "what2.2 begin_i: " << begin_i << " begin_j: " << begin_j << std::endl;
 
 			if (begin_j-1 >= 0 && key[begin_i][begin_j-1] != 1) { 
-				bool ret = checker(board, begin_i, begin_j-1, t_obj, new_str, key);	
-				std::cout << "what6" << std::endl;
-				if (ret == true)
-					return true;
+				checker(board, begin_i, begin_j-1, t_obj, new_str, key);	
 			}
+			
+			key[begin_i][begin_j] = 0;
+
 		}
 
-		return false;
+		return ;
 	}
 
-	void helper(vector<vector<char>>& board, string word) {
- 		Trie* trie_obj = new Trie();
+	void helper(vector<vector<char>>& board, Trie* trie_obj) {
+
+		vector<vector<int>> key_map(N, vector<int>(M, 0));
 		for (size_t i = 0; i < board.size(); ++i)	{
 			for (size_t j = 0; j < board[i].size(); ++j) {
-				if (board[i][j] == word[0]) {
- 					trie_obj->insert(word);
 					string str("");
-					vector<vector<int>> key_map(N, vector<int>(M, 0));
 					std::cout << "what.02" << std::endl;
-					bool ret = checker(board, i, j, trie_obj, str, key_map);
-					if (ret == true)
-						return;
-				}	
+
+					checker(board, i, j, trie_obj, str, key_map);
 			
 			} //for j
 		} // for i	
@@ -194,10 +186,15 @@ public:
 		N = board.size();
 		M = board[0].size();
 
+ 		Trie* trie_obj = new Trie();
+
 		for (size_t i = 0; i < words.size(); ++i) {
 			//std::cout << "what.02" << std::endl;
-			helper(board, words[i]);	
+ 			trie_obj->insert(words[i]);
+
 		}
+		
+		helper(board, trie_obj);	
 
 		return result;
         
@@ -205,8 +202,7 @@ public:
 };
 
 int main() {
-	/*
-	vector<string> words = {"oath","pea","eat","rain"};
+	/*vector<string> words = {"oath","pea","eat","rain"};
 	//vector<string> words = {"oath"};
 	vector<vector<char>> board =
 	{	
@@ -217,9 +213,18 @@ int main() {
 	};
 	*/
 
+	/*
 	vector<string> words = {"a"};
 	vector<vector<char>> board =
 	{	
+		{'a', 'a'}
+	};
+	*/
+	
+	vector<string> words = {"aaa", "aaab"};
+	vector<vector<char>> board =
+	{	
+		{'a', 'b'},
 		{'a', 'a'}
 	};
 	
