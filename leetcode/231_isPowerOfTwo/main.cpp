@@ -38,7 +38,7 @@ public:
 		return ret;
     }
 
-	bool isPowerOfTwo(int n) {
+	bool isPowerOfTwo_1(int n) {
 		if (n <= 0)
         	return false;
 
@@ -46,6 +46,11 @@ public:
 			return true;
 		else 
 			return false;
+    }
+	
+	bool isPowerOfTwo(int n) {
+		return ((n>0) && ( (n & (n-1))  == 0));
+
     }
 
 };
