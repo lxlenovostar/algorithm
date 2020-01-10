@@ -25,62 +25,58 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 using namespace std;
 
 class Solution {
 public:
-	int count;
+	//int count;
+	int N; 
 
-	int helper(int n) {
+
+	int dp(int n, vector<int> &mem) {
 		/*
-		if (n == 0) {
-			std::cout << "what0" << std::endl;
-			count++;
+		for (size_t i = 0; i < mem.size(); i++) {
+			std::cout << mem[i];
 		}
-
-		if (n >= 2) {	
-			std::cout << "what 2: " << n << std::endl;
-			helper(n-2);
-		}
-
-		if (n >= 1) {
-			std::cout << "what 1: " << n << std::endl;
-			helper(n-1);
-		}
+		std::cout << std::endl;
 		*/
 
-		if (n == 0)
+		if (n == N) {
+			std::cout << "what0.2" << std::endl;
+			return 1;	
+		}
+
+		if (n > N) {
+			std::cout << "what0.3" << std::endl;
 			return 0;
+		}
+		 
+		if (mem[n] != -1)  {
+			std::cout << "what0.1 n:" << n << " mem[n]: " << mem[n] << std::endl;
+			return mem[n];
+		}
 
-		if (n == 1)
-			return 1;
-
-		return ( (helper(n-1) + 1),  (helper(n-2) + 1) );
-
+		std::cout << "what0.4 n: " << n  << std::endl;
+		int a_1 = dp(n+1, mem);
+		std::cout << "what0.4 a_1: " << a_1  << std::endl;
+		int a_2 = dp(n+2, mem);
+		std::cout << "what0.4 a_2: " << a_2  << std::endl;
+		mem[n] = a_1 + a_2;
+		return mem[n];
 	}
-
-    int climbStairs_1(int n) {
+   
+	int climbStairs_1(int n) {
 		if (n <= 1)
 			return n;
 
-		helper(n);
+		vector<int> mem(n+1, -1);
+		N = n;
+		return dp(0, mem);
 
-		return count;
     }
 
-	int dp(int n) {
-		if (n == 0)
-			return 0;
-
-		if (n == 1) 
-			return 1;
-
-		 
-		return dp(n-1) + dp(n-2);
-	
-	}
-  
 	int climbStairs(int n) {
 		vector<int> ret(n+1, 1);
 
@@ -100,9 +96,9 @@ public:
 int main() {
 	Solution *obj = new Solution();
 
-	std::cout << obj->climbStairs(2) << std::endl;
-	//std::cout << obj->climbStairs(3) << std::endl;
-	//std::cout << obj->climbStairs(44) << std::endl;
+	//std::cout << obj->climbStairs_1(2) << std::endl;
+	//std::cout << obj->climbStairs_1(3) << std::endl;
+	std::cout << obj->climbStairs_1(44) << std::endl;
 
 	return 0;
 }
