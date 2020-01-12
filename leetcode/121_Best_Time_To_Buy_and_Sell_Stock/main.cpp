@@ -11,6 +11,7 @@
 输出: 5
 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
      注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
+
 示例 2:
 
 输入: [7,6,4,3,1]
@@ -86,6 +87,38 @@ public:
 		return ret;
 
 	}
+		
+	int maxProfit_2(vector<int>& prices) {
+		int n = prices.size();
+		int res = 0;
+
+		if (n <= 1)
+			return 0;
+
+		vector<vector<int>> dp;
+		dp.resize(n);
+
+		for (int i = 0; i < n; ++i) {
+			dp[i].resize(3);	
+		}
+
+		dp[0][0] = 0;
+		dp[0][1] = 0 - prices[0];
+		dp[0][2] = 0; 
+		for (int i = 1; i < n; ++i) {
+			dp[i][0] = dp[i-1][0];
+			dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i]); 
+			dp[i][2] = max(dp[i-1][2], dp[i-1][1] + prices[i]);
+
+			res = max(res, dp[i][0]);
+			res = max(res, dp[i][2]);
+
+			std::cout << "[i][0]: " << dp[i][0] << " [i][1]: " << dp[i][1] << " [i][2]: " << dp[i][2] << " res: " << res << std::endl;
+		}
+
+		return res;
+	}
+
 };
 
 int main() {
@@ -93,7 +126,7 @@ int main() {
 	std::vector<int> nums = {1,2,3,4,5};
 	//std::vector<int> nums = {7,6,4,3,1};
 	Solution *obj = new Solution(); 
-	std::cout << "result: " << obj->maxProfit_1(nums) << std::endl;
+	std::cout << "result: " << obj->maxProfit_2(nums) << std::endl;
 	return 0;
 }
 
