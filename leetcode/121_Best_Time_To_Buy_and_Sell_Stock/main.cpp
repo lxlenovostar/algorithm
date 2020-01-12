@@ -118,12 +118,43 @@ public:
 
 		return res;
 	}
+	
+	int maxProfit_3(vector<int>& prices) {
+		int n = prices.size();
+		int res = 0;
+
+		if (n <= 1)
+			return 0;
+
+		vector<vector<int>> dp;
+		dp.resize(n);
+
+		for (int i = 0; i < n; ++i) {
+			dp[i].resize(2);	
+		}
+
+		//cant't slove this problem:   std::vector<int> nums = {7,1,5,3,6,4};
+		dp[0][0] = 0;
+		dp[0][1] = 0 - prices[0];
+		for (int i = 1; i < n; ++i) {
+			dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i]);
+			dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i]); 
+
+			res = max(res, dp[i][0]);
+			res = max(res, dp[i][1]);
+
+			std::cout <<  "i: " << i << " [i][0]: " << dp[i][0] << " [i][1]: " << dp[i][1] << " res: " << res << std::endl;
+		}
+
+		return res;
+	}
+
 
 };
 
 int main() {
-	//std::vector<int> nums = {7,1,5,3,6,4};
-	std::vector<int> nums = {1,2,3,4,5};
+	std::vector<int> nums = {7,1,5,3,6,4};
+	//std::vector<int> nums = {1,2,3,4,5};
 	//std::vector<int> nums = {7,6,4,3,1};
 	Solution *obj = new Solution(); 
 	std::cout << "result: " << obj->maxProfit_2(nums) << std::endl;
