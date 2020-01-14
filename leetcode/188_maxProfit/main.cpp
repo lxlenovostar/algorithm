@@ -29,6 +29,7 @@ using namespace std;
 
 class Solution {
 public:
+	/*
     int maxProfit(vector<int>& prices) {
 		int ret = 0;	
 	
@@ -50,8 +51,8 @@ public:
 		}
 
 		return ret;
-        
     }
+	*/
     
 	int maxProfit_1(vector<int>& prices) {
 		int n = prices.size();
@@ -96,8 +97,8 @@ public:
 		sort(ret_max.begin(), ret_max.end(), std::greater<int>());
 
 		int max_ret = 0; 
-		int len = ret_max.size();
-		int index = min(2, len);
+		//int len = ret_max.size();
+		//int index = min(2, len);
 		//for (int i = 0; i < index; ++i) {
 		for (size_t i = 0; i < ret_max.size(); ++i) {
 			std::cout <<  ret_max[i] << " ";
@@ -183,18 +184,25 @@ public:
 		dp[0][0][0] = 0;
 		for (int i = 1; i < w; ++i) {
 			dp[0][i][1] = INT_MIN;
-
 			dp[0][i][0] = INT_MIN;
+
 		}
 		
 		for (int i = 1; i < n; ++i) {
-			for (int j = 1; j < w; ++j) {
+			for (int j = 0; j < w-1; ++j) {
 				dp[i][j][1] = max(dp[i-1][j-1][1], dp[i-1][j-1][0] - prices[i]); 
-
-				dp[i][j][0] = max(dp[i-1][j-1][0], dp[i-1][j-1][1] + prices[i]); 
 
 				std::cout << "i: " << i << " j: " << j << " [j][1]: " << dp[i][j][1] << " [j][0]: " << dp[i][j][0] << std::endl;
  			}
+
+			for (int j = 0; j < w; ++j) {
+				dp[i][j][0] = max(dp[i-1][j-1][0], dp[i-1][j-1][1] + prices[i]); 
+				
+				std::cout << "i: " << i << " j: " << j << " [j][1]: " << dp[i][j][1] << " [j][0]: " << dp[i][j][0] << std::endl;
+
+			}
+
+
 		}
 
 		/*
