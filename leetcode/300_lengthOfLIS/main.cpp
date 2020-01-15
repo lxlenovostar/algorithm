@@ -25,20 +25,26 @@ public:
 	int result;
 
 	void recu(vector<int>& nums, int k, int maxvalue, int ret) {
-		if (k >= N) {
+		if ((k+1) >= N) {
 			result = max(result, ret);
 			return;
 		}
 
 		if (nums[k+1] > maxvalue) {
-			//result = max(result, ret);
+			maxvalue = max(maxvalue, nums[k+1]);
 		
-			recu(nums, k+1, nums[k+1], 0);
+			std::cout << "what1 k: " << k << " nums[k+1]: " << nums[k+1]  << " maxvalue: " << maxvalue << " ret: " << ret << std::endl;
+		
+			recu(nums, k+1, nums[k+1], 1); //new start
 
-			recu(nums, k+1, maxvalue, ret);
+			recu(nums, k+1, maxvalue, ret+1); // choice
+
 		} else {
+			std::cout << "what2 k: " << k << " nums[k+1]: " << nums[k+1]  << " maxvalue: " << maxvalue << " ret: " << ret << std::endl;
 
-			recu(nums, k+1, maxvalue, ret+1);
+			recu(nums, k+1, nums[k+1], 1);  //new start
+
+			recu(nums, k+1, maxvalue, ret);  // not choice
 		}
 
 
@@ -50,9 +56,7 @@ public:
 		if (N <= 1)
 			return N;
 
-		int result = INT_MIN;
-
-		recu(nums, 0, nums[0], 0);
+		recu(nums, 0, nums[0], 1);
 
 		return result;
 	}
@@ -87,7 +91,10 @@ public:
 };
 
 int main() {
-	vector<int> nums = {10,9,2,5,3,7,101,18};
+	//vector<int> nums = {10,9,2,5,3,7,101,18};
+	//vector<int> nums = {2, 2};
+
+	vector<int> nums = {10,9,2,5,3,4};
 
 	Solution *obj = new Solution();
 	std::cout << obj->lengthOfLIS_1(nums) << std::endl;
