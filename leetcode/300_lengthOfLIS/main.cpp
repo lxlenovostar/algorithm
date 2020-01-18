@@ -93,46 +93,35 @@ public:
 		return max(taken, notaken);
 	}
 
-	/*
-	 * dp[0][0] = 0
-	 * dp[0][1] = 1
-	 *
-	 *
-	 * dp[n][1] = max(dp[n-1][1] + 1,  dp[n-1][0] + 1)
-	 *
-	 * dp[n][0] = max(dp[n-1][0],   dp[n-1][1]) 
-	 *
-	 * ret: max(dp[n-1][1], dp[n-1][0])
-	 * */
-	
-	int recu_mem(vector<int>& nums, int k, int maxvalue, vector<vector<int>> &mem) {
+	int recu_mem(vector<int>& nums, int k, int prev_index, vector<vector<int>> &mem) {
 		if (k == N) {
 			return 0;
 		}
 
-		int taken = 0;	
-		if (nums[k] > maxvalue)	{
-			std::cout << "what1 k: " << k << " nums[k]: " << nums[k]  << " maxvalue: " << maxvalue << std::endl;
+		if (mem[prev_index+1][k] != INT_MIN)
+			return mem[prev_index+1][k];
 
-			if (mem[k+1][1] == INT_MIN)
-				taken = 1 + recu_mem(nums, k+1, nums[k], mem);  // choice
-			else 
-				taken = mem[k+1][1];
+		int taken = 0;	
+		if (nums[k] > nums[prev_index])	{
+
+			taken = 1 + recu_mem(nums, k+1, k, mem);  // choice
+			
+			std::cout << "what1 k: " << k  << " prev_index: " << prev_index << " nums[k]: " << nums[k]  << " taken: " << taken << std::endl;
+
+			//mem[prev_index+1][k] = taken;
 		} 
 			
-		std::cout << "what2 k: " << k << " nums[k]: " << nums[k]  << " maxvalue: " << maxvalue << std::endl;
 
 			
 		int notaken;
+		notaken = recu_mem(nums, k+1, prev_index,  mem);  // not choice
 		
-		if (mem[k+1][0] == INT_MIN)
-			notaken = recu_mem(nums, k+1, maxvalue, mem);  // not choice
-		else 
-			notaken = mem[k+1][0];
+		std::cout << "what2 k: " << k << " prev_index: " << prev_index  << " nums[k]: " << nums[k]  << " notaken: " << notaken << std::endl;
 
 			
+		mem[prev_index+1][k] = max(taken, notaken);
 
-		return max(taken, notaken);
+		return mem[prev_index+1][k];
 	}
 
     int lengthOfLIS_1(vector<int>& nums) {
@@ -142,44 +131,39 @@ public:
 			return N;
 
 		vector<vector<int>> mem;
-		mem.resize(N-1);
+		mem.resize(N+1);
 
-		for (int i = 0; i < N-1; ++i) {
-			mem[i].resize(2);
+		for (int i = 0; i < N+1; ++i) {
+			mem[i].resize(N);
 
-			for (int j = 0; j < 2; ++j) {
+			for (int j = 0; j < N; ++j) {
 				mem[i][j] = INT_MIN;
 			}
 		}
 
+		return recu_mem(nums, 0, -1, mem);
 		//return recu(nums, 0, INT_MIN);
-		return recu_mem(nums, 0, INT_MIN, mem);
-
 	}
 
+	//DP
     int lengthOfLIS(vector<int>& nums) {
-     	int n = nums.size();
+		N = nums.size();
+		int result = 1;
 
-		if (n <= 1)
-			return 1;
+		if (N <= 1)
+			return N;
 
-		vector<int> ret;
-		ret.resize(n);
+		vector<int> ret(N, 1);
 
-		ret[0] = 1;
-		int result = INT_MIN;
+		for (int i = 1; i < N; ++i) {
+			for (int j = 0; j < i; ++j) {
+					if (nums[i] > nums[j])
+						ret[i] = max(ret[i], ret[j]+1);
+			}
 
-		for (int i = 1; i < n; ++i) {
-			std::cout << "before i: " << i << " ret[i]: " << ret[i]  << " result: " << result << std::endl;
-			if (nums[i] >= nums[i-1])
-				ret[i] = ret[i-1] + 1;
-			else  {
-				ret[i] = 1;
-			}	
-			
+
 			result = max(result, ret[i]);
-			
-			std::cout << "after i: " << i << " ret[i]: " << ret[i]  << " result: " << result << std::endl;
+
 		}
 
 		return result;
@@ -194,7 +178,7 @@ int main() {
 	//vector<int> nums = {10,9,2,5};
 
 	Solution *obj = new Solution();
-	std::cout << obj->lengthOfLIS_1(nums) << std::endl;
+	std::cout << obj->lengthOfLIS(nums) << std::endl;
 
 	return 0;
 }
