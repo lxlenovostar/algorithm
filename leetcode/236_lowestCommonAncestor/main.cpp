@@ -37,15 +37,17 @@ struct TreeNode {
 
 #include <string>
 #include <iostream>
-#include <iostream>
 #include <vector>
+#include <stack>
 #include <limits>
 
 using namespace std;
 
 class Solution {
 public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+	
+	//recu
+    TreeNode* lowestCommonAncestor_1(TreeNode* root, TreeNode* p, TreeNode* q) {
 	
 		if (root == nullptr)	
 			return nullptr;
@@ -73,6 +75,56 @@ public:
 
 		return nullptr;
     }
+	
+	bool dfs(TreeNode *root, TreeNode *node, vector<TreeNode*> &n_v) {
+		if (root == nullptr) {	
+			return false;
+		}
+
+		if (root->val == node->val) {
+			n_v.push_back(root);
+			return true;
+		}
+
+		n_v.push_back(root);
+		bool left = dfs(root->left, node, n_v);
+		if (left == true)
+			return true;
+
+		bool right = dfs(root->right, node, n_v);
+		if (right == true)
+			return true;
+
+		n_v.erase(n_v.end() - 1);
+
+		return false;
+		
+	}
+	
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+	
+		if (root == nullptr)
+			return nullptr;
+
+		vector<TreeNode*> p_v;
+		vector<TreeNode*> q_v;
+		TreeNode *ret = nullptr;
+
+		dfs(root, p, p_v);
+		dfs(root, q, q_v);
+
+		size_t len = p_v.size() <= q_v.size() ? p_v.size() : q_v.size();
+		for (size_t i = 0; i < len; ++i) {
+			if (p_v[i]->val == q_v[i]->val) {
+				ret = p_v[i];
+			} else {
+				break;	
+			} // if
+		} // for
+
+		return ret;
+	}
+
 };
 
 int  main() {
@@ -100,8 +152,8 @@ int  main() {
 	a3->right = a7;
 	
 	Solution *obj = new Solution();
-	TreeNode *node = obj->lowestCommonAncestor(a1, a2, a3);	
-	//TreeNode *node = obj->lowestCommonAncestor(a1, a2, a9);	
+	//TreeNode *node = obj->lowestCommonAncestor(a1, a2, a3);	
+	TreeNode *node = obj->lowestCommonAncestor(a1, a2, a9);	
 	if (node != nullptr)
 		std::cout << "result:" <<  node->val << std::endl;
 
