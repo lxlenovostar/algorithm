@@ -91,8 +91,9 @@ public:
 }
 */
 
-	int crossSum(vector<int>& nums, int left, int right, int p) {
-		std::cout << "cross left: " << left << " p: " << p << " right: " << right << std::endl;
+	int crossSum(vector<int>& nums, int left, int right, int p, int level) {
+		++level;
+		std::cout << "cross left: " << left << " p: " << p << " right: " << right << " level: " << level << std::endl;
 
 		if (left == right)
 			return nums[left];
@@ -115,17 +116,18 @@ public:
 
 	}
 
-	int divide(vector<int>& nums, int left, int right) {
+	int divide(vector<int>& nums, int left, int right, int level) {
 		int p = (left + right) / 2;
 
-		std::cout << "divide left: " << left << " p: " << p << " right: " << right << std::endl;
+		++level;
+		std::cout << "divide left: " << left << " p: " << p << " right: " << right << " level: " << level << std::endl;
 
 		if (left == right)
 			return nums[left];
 
-		int leftSum = divide(nums, left, p);
-		int rightSum = divide(nums, p+1, right);
-		int crosssum = crossSum(nums, left, right, p);
+		int leftSum = divide(nums, left, p, level);
+		int rightSum = divide(nums, p+1, right, level);
+		int crosssum = crossSum(nums, left, right, p, level);
 
 
 		int max_value = max(leftSum, rightSum);
@@ -137,7 +139,9 @@ public:
     int maxSubArray(vector<int>& nums) {
 		int len = nums.size();
 
-		return divide(nums, 0, len-1);
+		int level = 0;
+
+		return divide(nums, 0, len-1, level);
 	}
 };
 
