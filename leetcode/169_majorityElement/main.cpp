@@ -21,7 +21,7 @@ using namespace std;
 
 class Solution {
 public:
-    int majorityElement(vector<int>& nums) {
+    int majorityElement_2(vector<int>& nums) {
 
 		sort(nums.begin(), nums.end());
 
