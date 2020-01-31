@@ -22,13 +22,16 @@ n 是 32 位有符号整数，其数值范围是 [−231, 231 − 1] 。
 
 #include <iostream>
 #include <cmath>
+#include <limits.h>
 
 using namespace std;
 
 class Solution {
 public:
 	double ret;
-    double myPow(double x, int n) {
+
+	// violence 
+    double myPow1(double x, int n) {
 		if (n == 0) {
 			std::cout  << "what1" << std::endl;
 			return 1;
@@ -45,7 +48,7 @@ public:
 		return ret;
     }
 
- 	double myPow1(double x, int n) {
+ 	double myPow(double x, int n) {
 		double result = 0.0f;
 		if (n > 0) {
 			result = helper(x, n);	
@@ -70,7 +73,8 @@ public:
 		if (n == 1)
 			return x;
 		
-		if (n % 2 == 0) {
+		//if (n % 2 == 0) {
+		if ((n & 1) == 0) {
 			double tmp = helper(x, n/2);
 			ret = tmp*tmp;
 		} else {
@@ -87,20 +91,19 @@ public:
 int main() {
 	Solution *obj = new Solution();
 	
-	/*
 	double x = 2.10000;
 	int y = 3;
-	*/
 
 	//double x = 2.00000;
 	//int y = -2;
+	
 	//double x = 0.00001;
 	//double x = 2;
 	//int y = 2147;
 	//int y = 2147483647;
-	double x = 1.00000;
-	int y = -2147483648;
-	std::cout << "ret:" << obj->myPow1(x, y) << std::endl; 
+	//double x = 1.00000;
+	//int y = -2147483648;
+	std::cout << "ret:" << obj->myPow(x, y) << std::endl; 
 
 	return 0;
 }
