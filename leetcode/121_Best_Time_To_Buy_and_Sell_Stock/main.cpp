@@ -148,16 +148,36 @@ public:
 
 		return res;
 	}
+	
+	int maxProfit_4(vector<int>& prices) {
+		if (prices.size() <= 1)
+			return 0;
 
+		int ret = 0; 
+		int min_value = prices[0];
+
+		for (size_t i = 1; i < prices.size(); ++i) {
+			int curr_profit = prices[i]  - min_value;			
+			ret = max(ret, curr_profit); 
+
+			std::cout << "i: " << i << " prices[i]: " << prices[i] << " min_value: " << min_value << " ret: " << ret << " curr_profit: " << curr_profit << std::endl;
+
+			if (prices[i] < min_value)
+				min_value = prices[i];
+		}
+
+		return ret;
+
+	}
 
 };
 
 int main() {
-	std::vector<int> nums = {7,1,5,3,6,4};
+	//std::vector<int> nums = {7,1,5,3,6,4};
 	//std::vector<int> nums = {1,2,3,4,5};
-	//std::vector<int> nums = {7,6,4,3,1};
+	std::vector<int> nums = {7,6,4,3,1};
 	Solution *obj = new Solution(); 
-	std::cout << "result: " << obj->maxProfit_2(nums) << std::endl;
+	std::cout << "result: " << obj->maxProfit_4(nums) << std::endl;
 	return 0;
 }
 
