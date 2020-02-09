@@ -161,7 +161,7 @@ public:
 		return ret;
     }
 
-	int maxProfit(int k, vector<int>& prices) {
+	int maxProfit_1(int k, vector<int>& prices) {
        	int n = prices.size();		
   		int w = k+1;
 		int s = 2;
@@ -239,6 +239,7 @@ public:
 		return ret;
 
     }
+	
 
 };
 
