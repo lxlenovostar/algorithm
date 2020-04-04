@@ -1,4 +1,5 @@
 #include <iostream>
+#include <set>
 
 using namespace std;
 
@@ -54,11 +55,32 @@ class Solution {
 		*/
 							        
 	}
+
+	bool hasCycle_set(ListNode *head) {
+		if (head == NULL || head->next == NULL) {
+			return false;
+		}
+
+		set<int> visited;
+
+		while(head != NULL)	 {
+			if (visited.find(head->val) == visited.end()) {
+				visited.insert(head->val);
+			} else {
+				return true;
+			}
+
+			head = head->next;
+		}
+
+		return false;
+	}
 };
 
 
 int main() {
 	// head = [3,2,0,-4], pos = 1
+	/*
 	ListNode *n_1 = new ListNode(3);
 	ListNode *n_2 = new ListNode(2);
 	ListNode *n_3 = new ListNode(0);
@@ -68,6 +90,11 @@ int main() {
 	n_2->next = n_3;
 	n_3->next = n_4;
 	n_4->next = n_2;
+	*/
+	
+	ListNode *n_1 = new ListNode(1);
+	ListNode *n_2 = new ListNode(2);
+	n_1->next = n_2;
 
 	Solution *obj = new Solution();
 	std::cout << obj->hasCycle(n_1) << std::endl;
