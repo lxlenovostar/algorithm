@@ -36,16 +36,33 @@ class Solution {
 		if (v_len == 1)
 			return lists[0];
 
-		int k = v_len / 2;
-
-		while (k != 1) {
-			for (int i = 0; i < k; ++i) {
+		while (v_len > 1) {
+			int k = (v_len + 1) / 2;
+			std::cout << "v_len: " << v_len << " k: " << k << std::endl;
+			for (int i = 0; i < v_len / 2; ++i) {
 				lists[i] = mergeTwoLists(lists[i], lists[i+k]);
+				std::cout << "print i: " << i << std::endl;
+				printList(lists[i]); 
 			} // for
 
-			k = k / 2;
+			v_len = k;
 		}  // while
+	
+		// error ideas
+		/*
+		while (v_len != 0) {
+			int k = v_len / 2;
+			std::cout << "v_len: " << v_len << " k: " << k << std::endl;
+			for (int i = 0; i < v_len / 2; ++i) {
+				lists[i] = mergeTwoLists(lists[i], lists[i+k]);
+				std::cout << "print i: " << i << std::endl;
+				printList(lists[i]); 
+			} // for
 
+			v_len = k;
+		}  // while
+		*/
+		
 		return lists[0];
 	} 
 							        
@@ -64,9 +81,9 @@ class Solution {
 		ListNode *next = NULL;
 
 		while(l1 != NULL && l2 != NULL) {
-			std::cout << "l1->val: " << l1->val << " l2->val: " << l2->val << std::endl;
+			//std::cout << "l1->val: " << l1->val << " l2->val: " << l2->val << std::endl;
 			if (l1->val < l2->val) {
-				std::cout << "what1\n";
+				//std::cout << "what1\n";
 
 				next = l1->next;
 
@@ -76,7 +93,7 @@ class Solution {
 
 				l1 = next;;
 			} else {
-				std::cout << "what2\n";
+				//std::cout << "what2\n";
 
 				next = l2->next;
 
@@ -146,6 +163,12 @@ int main() {
 	ListNode *c_1 = new ListNode(2);
 	ListNode *c_2 = new ListNode(6);
 	c_1->next = c_2;
+	
+	/*
+	ListNode *d_1 = new ListNode(7);
+	ListNode *d_2 = new ListNode(8);
+	d_1->next = d_2;
+	*/
 
 	Solution *test = new Solution();
 	std::cout << "list1" << std::endl;
@@ -154,11 +177,14 @@ int main() {
 	test->printList(b_1);
 	std::cout << "list3" << std::endl;
 	test->printList(c_1);
+	//std::cout << "list4" << std::endl;
+	//test->printList(d_1);
 
 	vector<ListNode*> v_list;
 	v_list.push_back(a_1);
 	v_list.push_back(b_1);
 	v_list.push_back(c_1);
+	//v_list.push_back(d_1);
 
 	ListNode *head =  test->mergeKLists(v_list);	
 	std::cout << "finish." << std::endl;
