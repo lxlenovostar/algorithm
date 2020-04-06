@@ -43,8 +43,8 @@ class Solution {
 			if (level >= max_depth) {
 				std::cout << "level: " << level <<  " max_depth: " << max_depth << std::endl;
 				max_depth = level;
-				return;
 			}
+			return;
 		}
 
 		std::cout << "val: " << node->val << " level: " << level << std::endl;
@@ -71,6 +71,7 @@ class Solution {
 };
 
 int  main() {
+	/*
 	TreeNode *a1 = new TreeNode(3);
 	TreeNode *a2 = new TreeNode(9);
 	TreeNode *a3 = new TreeNode(20);
@@ -81,6 +82,11 @@ int  main() {
 	a1->right = a3;
 	a3->left = a4;
 	a3->right = a5;
+	*/
+	
+	TreeNode *a1 = new TreeNode(1);
+	TreeNode *a2 = new TreeNode(2);
+	a1->left = a2;
 
 	Solution *test = new Solution();
 	int result = test->maxDepth(a1);	
