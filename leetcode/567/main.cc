@@ -7,19 +7,17 @@ using namespace std;
 
 class Solution {
 public:
-    string minWindow(string s, string t) {
+    bool checkInclusion(string s1, string s2) {
         unordered_map<char, int> need, window;
-        for (char c : t) need[c]++;
+        for (char c : s1) need[c]++;
 
         int left = 0;
         int right = 0;
-        int start = 0;
-        int len =  INT_MAX;
         int valid = 0; 
 
-        while (right < s.size()) {
+        while (right < s2.size()) {
             /* 右移滑动窗口 */
-            char d = s[right];
+            char d = s2[right];
 
             right++;
 
@@ -29,22 +27,21 @@ public:
                     valid++;
             } 
 
-            //std::cout << "left: " << left << " right: " << right << std::endl;
-            //std::cout << "valid: " << valid << " need.size(): " << need.size() << std::endl;
+            //std::cout << "1 left: " << left << " right: " << right << std::endl;
+            //std::cout << "1 valid: " << valid << " need.size(): " << need.size() << std::endl;
 
             /* 左移滑动窗口 */
-            while (valid == need.size()) {
+            while (right - left >= s1.size()) {
                 /*
                  * 统计最后结果
                  */
-                if (len > (right - left)) {
-                    start = left;
-                    len = right - left;
-                    //std::cout << "2 left: " << left << " right: " << right << std::endl;
-                    //std::cout << "start: " << start << " len: " << len << std::endl;
-                }
+                //std::cout << "left: " << left << " right: " << right << std::endl;
+                //std::cout << "valid: " << valid << " need.size(): " << need.size() << std::endl;
+                //if (valid == need.size() && right - left == s1.size())
+                if (valid == need.size() )
+                    return true;
 
-                char l = s[left];
+                char l = s2[left];
                 left++;
                 if (need.count(l)) {
                      if (window[l] == need[l]) {
@@ -53,21 +50,22 @@ public:
                      window[l]--;
                 } 
 
-
             }
 
         }
 
-        return len == INT_MAX ? "" : s.substr(start, len);
+        return false;
     }
 };
 
 int main() {
     //std::string str = "ADOBECODEBANC";
     //std::string str2 = "ABC";
-    std::string str = "a";
-    std::string str2 = "aa";
+    //std::string s1 = "ab";
+    //std::string s2 = "eidboaooo";
+    std::string s1 = "abcdxabcde";
+    std::string s2 = "abcdeabcdx";
     Solution * test = new Solution();
-    std::cout << test->minWindow(str, str2) << std::endl; 
+    std::cout << test->checkInclusion(s1, s2) << std::endl; 
     return 0;
 }
