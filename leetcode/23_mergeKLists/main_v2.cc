@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 /*
  * Definition for singly-linked list.
  */
@@ -11,57 +12,42 @@
  
 class Solution {
 	public:
-		ListNode* mergeKLists(std::vector<ListNode*>& lists) {
-			if (lists.size()  == 1)
-				return lists[0];
-            if (lists.size() == 0)
-                return nullptr;
-			
-			int n = lists.size();
-			while( n > 1) {
-				std::cout << "n: " << n << std::endl;
-				for (int i = 0; i < n/2; ++i)
-				{
-					lists[i] =  mergeTwoLists(lists[i], lists[n-i-1]);
-				}
-				n = (n+1)/2;
-			}
+		struct Status {
+        int val;
+        struct ListNode *ptr;
+        bool operator < (const Status &rhs) const {
+            return val > rhs.val;
+        }
+    };
 
+    std::priority_queue <Status> q;
+
+	ListNode* mergeKLists(std::vector<ListNode*>& lists) {
+		if (lists.size()  == 1)
 			return lists[0];
-    	}
+        if (lists.size() == 0)
+            return nullptr;
+		
+		ListNode head(-1);
+		ListNode *tail = &head;
 
-		ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
-			ListNode dummy(0);
-			ListNode* p = &dummy;
-
-			while(l1 && l2) {
-				int val1 = l1->val;
-				int val2 = l2->val;
-				
-				if (val1 <= val2) {
-					//std::cout << "val1: " << val1 << std::endl;
-					p->next = l1;
-					p = p->next;
-					l1 = l1->next;
-				} else {
-					//std::cout << "val2: " << val2 << std::endl;
-					p->next = l2;
-					p = p->next;
-					l2 = l2->next;
-				}
-			} 
-
-			if (l1 == nullptr) {
-				std::cout << "l1" << std::endl;
-				p->next = l2;
-			}
-			else { 
-				std::cout << "l2" << std::endl;
-				p->next = l1;
-			}
-			
-			return dummy.next;
+		for (const auto & item : lists) {
+			if (item) q.push({item->val, item});
 		}
+
+		while (!q.empty()) {
+			auto tmp = q.top();
+			q.pop();
+			tail->next = tmp.ptr;	
+			tail = tail->next;
+			
+			if (tmp.ptr->next) 
+				q.push({tmp.ptr->next->val, tmp.ptr->next});
+		}
+
+		return head.next;
+			
+    }
 
 		void printList(ListNode* head) {
 			if(head == NULL) {
