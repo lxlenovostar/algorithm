@@ -5,26 +5,22 @@ using namespace std;
 
 class Solution {
 public:
-    vector<int> tmp;
-    vector<vector<int>> ret;
 
-    void dfs(vector<int>&nums, int cur) {
-        if (tmp.size() == nums.size()) {
-            ret.push_back(tmp);
-            return;
+    void dfs(vector<int>&nums, int cur, vector<vector<int>>& result) {
+        if (cur == nums.size()-1) {
+            result.push_back(nums);
+        } else {
+            for (int j = cur; j < nums.size(); ++j) {
+                std::swap(nums[cur], nums[j]);
+                dfs(nums, cur+1, result);
+                std::swap(nums[cur], nums[j]);
+            }
         }
-        
-        /*  不选 */
-        dfs(nums, cur+1);
-
-        tmp.push_back(nums[cur]);
-        dfs(nums, cur+1);
-        tmp.pop_back();
-
     }
 
     vector<vector<int>> permute(vector<int>& nums) {
-        dfs(nums, 0);
+        vector<vector<int>> ret;
+        dfs(nums, 0, ret);
         return ret;
     }
 };
