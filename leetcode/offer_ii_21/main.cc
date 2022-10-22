@@ -21,30 +21,35 @@ using namespace std;
 
 class Solution {
 public:
-    ListNode* removeNthFromEnd(ListNode* head, int n) {
-        ListNode *dummy = new ListNode(0);
-        dummy->next = head;
-
+    ListNode *detectCycle(ListNode *head) {
         ListNode *fast = head;
-        ListNode *slow = dummy;
-        int count = n;
+        ListNode *slow = head;
+		bool find = false;
 
-        while(count > 0 && fast != nullptr) {
-            fast = fast->next;
-            count--;
-        }
-
-        while(fast) {
-            fast = fast->next;
+        while (fast && fast->next && slow) {
+            fast = fast->next->next; 
             slow = slow->next;
+
+			if (fast == slow) {
+				find = true;
+				break;
+			}
         }
 
-        ListNode *del_node = slow->next;        
-        ListNode *next_next_node = del_node->next;
-        slow->next = next_next_node;
-        delete del_node;
+		if (!find)
+			return nullptr;
 
-        return dummy->next;
+		ListNode *new_start = head;
+
+		std::cout << "what slow val:" << slow->val << std::endl;
+		std::cout << "what fast val:" << fast->val << std::endl;
+
+		while (new_start && slow && new_start != slow) {
+			new_start = new_start->next;		
+			slow = slow->next;
+		}
+
+		return slow;
     }
 
     void printList(ListNode* head) {
@@ -77,24 +82,21 @@ public:
 };
 
 int main() {
-    ListNode *a1 = new ListNode(5);
-	ListNode *a = new ListNode(4);
-	a->next = a1;
-	ListNode *b = new ListNode(3);
+	/*
+	ListNode *a = new ListNode(-4);
+	ListNode *b = new ListNode(0);
 	b->next = a;
 	ListNode *c = new ListNode(2);
 	c->next = b;
-	ListNode *d = new ListNode(1);
+	ListNode *d = new ListNode(3);
 	d->next = c;
-	//ListNode *d = new ListNode(1);
+    a->next = c;
+	*/
+	ListNode *d = new ListNode(1);
 
 	Solution *test = new Solution();
-	std::cout << "list1" << std::endl;
-	test->printList(d);
-	ListNode *head =  test->removeNthFromEnd(d, 2);	
-	std::cout << "finish." << std::endl;
-	test->printList(head);
-	test->freeList(head);
+	ListNode *head =  test->detectCycle(d);	
+	std::cout << "finish." << head->val << std::endl;
 
     return 0;
 }
