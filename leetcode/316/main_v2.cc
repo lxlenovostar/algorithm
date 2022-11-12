@@ -22,17 +22,17 @@ public:
 
         for (char ch: s) {
             if (!visible[ch - 'a']) {
-            while(!ret_stack.empty() && count_ch[ret_stack.back() - 'a'] > 0) {
-                if (ch < ret_stack.back()) {
-                    visible[ret_stack.back() - 'a'] = 0;
-                    ret_stack.pop_back();
-                } else { 
-                    break; 
+                while(!ret_stack.empty() && count_ch[ret_stack.back() - 'a'] > 0) {
+                    if (ch < ret_stack.back()) {
+                        visible[ret_stack.back() - 'a'] = 0;
+                        ret_stack.pop_back();
+                    } else { 
+                        break; 
+                    }
                 }
-            }
             
-            ret_stack.push_back(ch);
-            visible[ch - 'a'] = 1;
+                ret_stack.push_back(ch);
+                visible[ch - 'a'] = 1;
             }
 
             count_ch[ch - 'a'] -= 1;
