@@ -34,6 +34,10 @@ public:
     
     void put(int key, int value) {
         if (m_hash.find(key) == m_hash.end() && m_hash.size() + 1 > m_capacity) {
+             if (m_tail->prev) {
+                //std::cout << "tail: " << m_tail->prev->val << " key: " << key << " value: " << value << std::endl;
+                m_hash.erase(m_tail->prev->key);
+            }
             del_tail();
         }
 
