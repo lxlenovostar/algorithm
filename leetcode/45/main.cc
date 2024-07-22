@@ -17,10 +17,12 @@ public:
                 if (i == end) {
                     end = right;
                     ret++;
+                    if (end >= nums.size() -1)
+                        return ret;
                 }
             }
 
-            std::cout << "what i:" << i << " right: " << right  << " ret: " << ret << std::endl;
+            //std::cout << "what i:" << i << " right: " << right  << " ret: " << ret << std::endl;
 
         }
 
@@ -29,10 +31,10 @@ public:
 };
 
 int main() {
-    //vector<int> nums = {2,3,1,1,4};
+    vector<int> nums = {2,3,1,1,4};
     //vector<int> nums = {2,3,0,1,4};
     //vector<int> nums = {4,1,1,3,1,1,1};
-    vector<int> nums = {2,0,2,0,1};
+    //vector<int> nums = {2,0,2,0,1};
 
     Solution *test = new Solution();
     std::cout << test->jump(nums) << std::endl;
